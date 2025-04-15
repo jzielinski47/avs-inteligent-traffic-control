@@ -1,6 +1,6 @@
 export interface Command {
-  type: string;
-  vehicleId?: string;
-  startRoad?: string;
-  endRoad?: string;
+    type: string;
+    vehicleId?: string;
+    startRoad?: string;
+    endRoad?: string;
 }

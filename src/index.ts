@@ -13,22 +13,22 @@ const input = JSON.parse(fs.readFileSync(inputPath, "utf-8")); // TODO: validate
 const steps = input.commands;
 
 steps.forEach((step: Command, index: number) => {
-  const command: string = step.type;
-  switch (command) {
-    case "addVehicle":
-      const { vehicleId, startRoad, endRoad } = step; // TODO: validate if startRoad and endRoad maps the Direction type
-      if (!vehicleId || !startRoad || !endRoad) break;
-      const tempVehicle: Vehicle = { vehicleId, startRoad, endRoad, waitTime: 0 };
+    const command: string = step.type;
+    switch (command) {
+        case "addVehicle":
+            const { vehicleId, startRoad, endRoad } = step; // TODO: validate if startRoad and endRoad maps the Direction type
+            if (!vehicleId || !startRoad || !endRoad) break;
+            const tempVehicle: Vehicle = { vehicleId, startRoad, endRoad, waitTime: 0 };
 
-      environment[startRoad as Road].queue.push(tempVehicle);
+            environment[startRoad as Road].queue.push(tempVehicle);
 
-      break;
-    case "step":
-      const leftVehicles: Vehicle[] = [];
-      // TODO: nadawane jest priority dla drog gdzie jest najwiecej samochod
-      // TODO: Zastanów się nad różnymi algorytmami dostosowywania świateł (np. opartymi na proporcjach, czasie oczekiwania)
+            break;
+        case "step":
+            const leftVehicles: Vehicle[] = [];
+            // TODO: nadawane jest priority dla drog gdzie jest najwiecej samochod
+            // TODO: Zastanów się nad różnymi algorytmami dostosowywania świateł (np. opartymi na proporcjach, czasie oczekiwania)
 
-      /*
+            /*
             tutaj odbywa sie symulacja. Komenda step: wykonuje krok symulacji, 
             podczas którego przez skrzyżowanie przejeżdżają pierwsze pojazdy na drodze,
             która aktualnie ma zielone światło. 
@@ -41,24 +41,29 @@ steps.forEach((step: Command, index: number) => {
              sie swiatlo odpali ze jak jego swiatlo sie zapali dla jego kierunku to wtedy tez z przeciwnego kierunku sie odpali
       */
 
-      // TODO: nadawanie swiatel
+            // TODO: nadawanie swiatel
 
-      // TODO: logika ruszania jesli swiatlo zielone
-      for (const dir of Object.values(Direction)) {
-        const state = environment[dir];
+            // TODO: logika ruszania jesli swiatlo zielone
+            for (const dir of Object.values(Direction)) {
+                const state = environment[dir];
 
-        console.log(state.queue.length, dir, state.light);
-      }
+                console.log(state.queue.length, dir, state.light);
 
-      output.stepStatuses.push({ leftVehicles });
-      break;
-  }
+                if (state.light === "green") {
+                    leftVehicles.push(state.queue[0]);
+                    state.queue.shift();
+                }
+            }
 
-  console.log(index, environment);
+            output.stepStatuses.push({ leftVehicles });
+            break;
+    }
+
+    console.log(index, environment);
 });
 
 try {
-  fs.writeFileSync(outputPath, JSON.stringify(output));
+    fs.writeFileSync(outputPath, JSON.stringify(output));
 } catch (err) {
-  console.error(err);
+    console.error(err);
 }

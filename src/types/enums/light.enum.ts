@@ -1,5 +1,5 @@
 export enum Light {
-  RED,
-  YELLOW,
-  GREEN,
+    RED = "red",
+    YELLOW = "yellow",
+    GREEN = "green",
 }

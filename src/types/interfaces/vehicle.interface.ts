@@ -1,6 +1,6 @@
 export interface Vehicle {
-  vehicleId: string;
-  startRoad: string;
-  endRoad: string;
-  waitTime?: number;
+    vehicleId: string;
+    startRoad: string;
+    endRoad: string;
+    waitTime?: number;
 }
