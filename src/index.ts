@@ -3,6 +3,7 @@ import { Road } from "./types/road.type";
 import { Command } from "./types/interfaces/command.interface";
 import { Vehicle } from "./types/interfaces/vehicle.interface";
 import { Direction } from "./types/enums/direction.enum";
+import { Light } from "./types/enums/light.enum";
 
 const fs = require("node:fs");
 
@@ -24,33 +25,19 @@ steps.forEach((step: Command, index: number) => {
 
             break;
         case "step":
-            const leftVehicles: Vehicle[] = [];
-            // TODO: nadawane jest priority dla drog gdzie jest najwiecej samochod
-            // TODO: Zastanów się nad różnymi algorytmami dostosowywania świateł (np. opartymi na proporcjach, czasie oczekiwania)
+            const directionNames = Object.values(Direction) as Direction[];
+            const possibleDiretions = {};
+            const leftVehicles: string[] = [];
 
-            /*
-            tutaj odbywa sie symulacja. Komenda step: wykonuje krok symulacji, 
-            podczas którego przez skrzyżowanie przejeżdżają pierwsze pojazdy na drodze,
-            która aktualnie ma zielone światło. 
+            // TODO: Inteligentne przypisanie świateł na kierunki
 
-            czyli tak jakby rusza sie pierwsza linia pojazdow czyli kolejka LIFO
+            // TODO: Logika sprawdzenia czy nie ma zielonego na kolidujacych kierunkach
 
-            trzeba wziac pod uwage dla kazdego pojazdu gdzie jedzie oraz dac mu odpowiednie swiatlo
-            albo sumowac priority. kazdy vehicle bedzie mial czas oczekiwania w rundach ile juz stoi
-            planuje zrobic tak ze no najwyzsze priority bedzie mial ten ktory najdluzej stoi i tak
-             sie swiatlo odpali ze jak jego swiatlo sie zapali dla jego kierunku to wtedy tez z przeciwnego kierunku sie odpali
-      */
-
-            // TODO: nadawanie swiatel
-
-            // TODO: logika ruszania jesli swiatlo zielone
-            for (const dir of Object.values(Direction)) {
+            // TODO: Logika puszczenia samochodu na zielonym na turze
+            for (const dir of directionNames) {
                 const state = environment[dir];
-
-                console.log(state.queue.length, dir, state.light);
-
-                if (state.light === "green") {
-                    leftVehicles.push(state.queue[0]);
+                if (state.light === Light.GREEN && state.queue.length > 0) {
+                    leftVehicles.push(state.queue[0].vehicleId);
                     state.queue.shift();
                 }
             }

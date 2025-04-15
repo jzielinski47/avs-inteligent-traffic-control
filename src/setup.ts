@@ -5,23 +5,23 @@ import { Vehicle } from "./types/interfaces/vehicle.interface";
 
 export const environment: Environment = {
     [Direction.NORTH]: {
-        light: Light.YELLOW,
+        light: Light.GREEN,
         queue: [],
     },
     [Direction.EAST]: {
-        light: Light.YELLOW,
+        light: Light.GREEN,
         queue: [],
     },
     [Direction.SOUTH]: {
-        light: Light.YELLOW,
+        light: Light.GREEN,
         queue: [],
     },
     [Direction.WEST]: {
-        light: Light.YELLOW,
+        light: Light.GREEN,
         queue: [],
     },
 };
 
-export const output: { stepStatuses: { leftVehicles: Vehicle[] }[] } = {
+export const output: { stepStatuses: { leftVehicles: string[] }[] } = {
     stepStatuses: [],
 };

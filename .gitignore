@@ -145,3 +145,5 @@ dist
 
 node_modules/
 dist/
+input.json
+output.json
