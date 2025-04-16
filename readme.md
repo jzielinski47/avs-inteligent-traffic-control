@@ -5,6 +5,7 @@ I thought of a system that relies on the time the vehicle waits at the crossroad
 The priority is assigned to the vehicle that has waited the longest, with an exception for the Emergency vehicles.
 
 The traffic  is considered in four non-colliding route patterns:
+![alt text](scenarios.jpg)
 ```ts
 [
     [
