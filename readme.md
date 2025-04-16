@@ -1,8 +1,19 @@
 # AVS inteligent traffic control system
 
-## 
+## Overview
 
-## Traffic Control Algorithm Overview
+## Functional Requirements Fulfilled
+- Realistic four-way intersection simulation with four approaches: **north, south, east, and west**
+- Vehicles can perform the following manoeuvres: **left turn, right turn, and going straight**
+- Vehicles are placed into queues based on their entry direction
+- The system assigns green lights to non-colliding traffic routes using predefined route groups
+- Traffic priority is based on how long a vehicle has been waiting at the intersection
+- Colliding-free signal phases are ensured — no colliding routes receive green lights at the same time
+
+## Aditional Features
+- Emergency vehicle preemption is implemented: emergency vehicles get immediate passage regardless of queue position
+
+## Traffic Control Algorithm
 
 I thought of a system that relies on the time the vehicle waits at the crossroad.
 The priority is assigned to the vehicle that has waited the longest, with an exception for the Emergency vehicles.
@@ -157,9 +168,7 @@ Output JSON:
 }
 ```
 
-## Aditional features
-
-### **Emergency vehicle preemption system**
+## Emergency Vehicle Preemption
 
 When the system detects that an emergency vehicle appears at the crossroad, all lights instantly change the priority to let the emergency vehicle pass safely. This approach is a common practice in the United States to improve emergency response times. For further details, see: https://en.wikipedia.org/wiki/Traffic_signal_preemption
 
