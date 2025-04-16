@@ -1,6 +1,6 @@
 # AVS inteligent traffic control system
 
-## Implemented algorythm for traffic control
+## Traffic Control Algorithm Overview
 
 I thought of a system that relies on the time the vehicle waits at the crossroad.
 The priority is assigned to the vehicle that has waited the longest, with an exception for the Emergency vehicles.
