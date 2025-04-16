@@ -1,5 +1,7 @@
 # AVS inteligent traffic control system
 
+## 
+
 ## Traffic Control Algorithm Overview
 
 I thought of a system that relies on the time the vehicle waits at the crossroad.

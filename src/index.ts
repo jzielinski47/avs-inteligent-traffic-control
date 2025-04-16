@@ -1,11 +1,11 @@
+import { handleVehicleMovement } from "./core/handleVehicleMovement";
+import { resetTrafficLights } from "./core/resetTrafficLights";
+import { trafficController as runTrafficLightsControlSystem } from "./core/trafficController/trafficController";
 import { directionNames, environment, output } from "./setup";
 import { Command } from "./types/interfaces/command.interface";
 import { Vehicle } from "./types/interfaces/vehicle.interface";
 import { Road } from "./types/road.type";
 import assignManoeuvre from "./utils/assignManoeuvre";
-import { handleVehicleMovement } from "./utils/handleVehicleMovement";
-import { resetTrafficLights } from "./utils/resetTrafficLights";
-import { trafficController as runTrafficLightsControlSystem } from "./utils/trafficController";
 import validateJson from "./utils/validateJson";
 
 const fs = require("node:fs");

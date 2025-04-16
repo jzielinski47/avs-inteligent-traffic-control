@@ -1,7 +1,7 @@
 import { directionNames, environment } from "../setup";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
 
-export const getLongestWaitingVehicle = (): Vehicle | null => {
+export const getPriorityVehicle = (): Vehicle | null => {
     let longestWaitTimeIndex = 0;
     let longestWaitTimeVeh: Vehicle | null = null;
 
