@@ -1,9 +1,10 @@
-import { environment, output } from "./setup";
-import { Road } from "./types/road.type";
+import { directionNames, environment, output, routeGroups } from "./setup";
+import { Light } from "./types/enums/light.enum";
+import { Manoeuvres } from "./types/enums/manoeuvres.enum";
 import { Command } from "./types/interfaces/command.interface";
 import { Vehicle } from "./types/interfaces/vehicle.interface";
-import { Direction } from "./types/enums/direction.enum";
-import { Light } from "./types/enums/light.enum";
+import { Road } from "./types/road.type";
+import { getLongestWaitingVehicle } from "./utils/getLongestWaitingVehicle";
 
 const fs = require("node:fs");
 
@@ -15,38 +16,88 @@ const steps = input.commands;
 
 steps.forEach((step: Command, index: number) => {
     const command: string = step.type;
+    console.log(index, "before", command, environment);
     switch (command) {
         case "addVehicle":
             const { vehicleId, startRoad, endRoad } = step; // TODO: validate if startRoad and endRoad maps the Direction type
             if (!vehicleId || !startRoad || !endRoad) break;
             const tempVehicle: Vehicle = { vehicleId, startRoad, endRoad, waitTime: 0 };
 
+            routeGroups.forEach((group) => {
+                group.forEach((route) => {
+                    if (route.startRoad === tempVehicle.startRoad && route.endRoad === tempVehicle.endRoad) {
+                        tempVehicle.manoeuvre = route.type;
+                    }
+                });
+            });
+
             environment[startRoad as Road].queue.push(tempVehicle);
 
             break;
         case "step":
-            const directionNames = Object.values(Direction) as Direction[];
-            const possibleDiretions = {};
             const leftVehicles: string[] = [];
 
             // TODO: Inteligentne przypisanie świateł na kierunki
+
+            // arbitrary for the longest waiting vehicle
+            const priorityVehicle = getLongestWaitingVehicle();
+            console.log("priority", priorityVehicle);
+            routeGroups.forEach((group, groupId) => {
+                let tempManouver: Manoeuvres;
+                let selectedGroup: number;
+                group.forEach((route) => {
+                    if (route.startRoad === priorityVehicle?.startRoad && route.endRoad === priorityVehicle?.endRoad) {
+                        tempManouver = priorityVehicle.manoeuvre as Manoeuvres;
+                        selectedGroup = groupId;
+                    }
+
+                    if (groupId == selectedGroup) {
+                        if (tempManouver == Manoeuvres.LEFTTURN) {
+                            environment[route.startRoad].priorityLeftSignalLight = Light.GREEN;
+                        } else environment[route.startRoad].straightRightSignalLight = Light.GREEN;
+                    }
+                });
+            });
 
             // TODO: Logika sprawdzenia czy nie ma zielonego na kolidujacych kierunkach
 
             // TODO: Logika puszczenia samochodu na zielonym na turze
             for (const dir of directionNames) {
                 const state = environment[dir];
-                if (state.light === Light.GREEN && state.queue.length > 0) {
-                    leftVehicles.push(state.queue[0].vehicleId);
-                    state.queue.shift();
+                if (state.queue.length > 0) {
+                    if (
+                        (state.queue[0].manoeuvre == Manoeuvres.LEFTTURN &&
+                            state.priorityLeftSignalLight == Light.GREEN) ||
+                        (state.queue[0].manoeuvre == Manoeuvres.STRAIGHT &&
+                            state.straightRightSignalLight == Light.GREEN) ||
+                        (state.queue[0].manoeuvre == Manoeuvres.RIGHTTURN &&
+                            state.straightRightSignalLight == Light.GREEN)
+                    ) {
+                        console.log(state.queue[0].vehicleId + " opuszcza skrzyzowanie! ");
+                        leftVehicles.push(state.queue[0].vehicleId);
+                        state.queue.shift();
+                    }
                 }
+            }
+
+            console.log(index, "after", environment);
+
+            // reset swiatel
+            for (const dir of directionNames) {
+                const state = environment[dir];
+                state.priorityLeftSignalLight = Light.RED;
+                state.straightRightSignalLight = Light.RED;
             }
 
             output.stepStatuses.push({ leftVehicles });
             break;
     }
 
-    console.log(index, environment);
+    // TODO: Zwiekszenie tur oczekiwania samochodu
+    for (const dir of directionNames) {
+        const state = environment[dir];
+        state.queue.forEach((vehicle) => (vehicle.waitTime += 1));
+    }
 });
 
 try {

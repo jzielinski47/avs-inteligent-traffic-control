@@ -9,6 +9,7 @@ export interface Environment {
 }
 
 interface Road {
-    light: Light;
+    priorityLeftSignalLight: Light;
+    straightRightSignalLight: Light;
     queue: Vehicle[];
 }
