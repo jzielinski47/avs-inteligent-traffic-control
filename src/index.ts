@@ -26,7 +26,7 @@ function main() {
 
     steps.forEach((step: Command, index: number) => {
         const command: string = step.type;
-        console.log(index, "before", command, environment);
+        console.log(index, command, environment);
         switch (command) {
             case "addVehicle":
                 const { vehicleId, startRoad, endRoad } = step; // TODO: validate if startRoad and endRoad map the Direction type
@@ -46,7 +46,7 @@ function main() {
 
                 handleVehicleMovement(leftVehicles);
 
-                console.log(index, "after", environment);
+                console.log(index, environment);
 
                 resetTrafficLights();
 

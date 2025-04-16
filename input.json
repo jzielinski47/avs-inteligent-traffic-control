@@ -5,53 +5,22 @@
 
             "vehicleId": "vehicle1",
 
-            "startRoad": "south",
+            "startRoad": "north",
 
-            "endRoad": "north"
+            "endRoad": "east"
         },
-
         {
             "type": "addVehicle",
 
             "vehicleId": "vehicle2",
 
-            "startRoad": "north",
+            "startRoad": "south",
 
-            "endRoad": "south"
+            "endRoad": "west"
         },
-
         {
             "type": "step"
         },
-
-        {
-            "type": "step"
-        },
-
-        {
-            "type": "addVehicle",
-
-            "vehicleId": "vehicle3",
-
-            "startRoad": "west",
-
-            "endRoad": "south"
-        },
-
-        {
-            "type": "addVehicle",
-
-            "vehicleId": "vehicle4",
-
-            "startRoad": "west",
-
-            "endRoad": "south"
-        },
-
-        {
-            "type": "step"
-        },
-
         {
             "type": "step"
         }

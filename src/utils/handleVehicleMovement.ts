@@ -12,7 +12,7 @@ export const handleVehicleMovement = (leftVehicles: string[]) => {
                 (state.queue[0].manoeuvre == Manoeuvres.RIGHTTURN && state.straightRightSignalLight == Light.GREEN) ||
                 state.queue[0].isEmergencyVehicle
             ) {
-                console.log(state.queue[0].vehicleId + " opuszcza skrzyzowanie! ");
+                console.log(state.queue[0].vehicleId + " leaves the crossroad! ");
                 leftVehicles.push(state.queue[0].vehicleId);
                 state.queue.shift();
             }

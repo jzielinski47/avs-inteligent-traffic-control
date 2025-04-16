@@ -7,26 +7,23 @@ import { resetTrafficLights } from "./resetTrafficLights";
 export const trafficController = () => {
     const priorityVehicle = getLongestWaitingVehicle();
     console.log("priority", priorityVehicle);
-    routeGroups.forEach((group, groupId) => {
-        let selectedManoeuvre: Manoeuvres;
-        let selectedGroup: number;
-        group.forEach((route) => {
-            if (priorityVehicle?.isEmergencyVehicle) {
-                resetTrafficLights();
-            } else {
-                if (route.startRoad === priorityVehicle?.startRoad && route.endRoad === priorityVehicle?.endRoad) {
-                    selectedManoeuvre = priorityVehicle.manoeuvre as Manoeuvres;
-                    selectedGroup = groupId;
-                }
+    let selectedManoeuvre: Manoeuvres;
+    let selectedGroup: number;
 
-                if (groupId == selectedGroup) {
-                    environment[route.startRoad][
-                        selectedManoeuvre == Manoeuvres.LEFTTURN
-                            ? "priorityLeftSignalLight"
-                            : "straightRightSignalLight"
-                    ] = Light.GREEN;
-                }
+    routeGroups.forEach((group, groupId) => {
+        group.forEach((route) => {
+            if (route.startRoad === priorityVehicle?.startRoad && route.endRoad === priorityVehicle?.endRoad) {
+                selectedManoeuvre = priorityVehicle.manoeuvre as Manoeuvres;
+                selectedGroup = groupId;
             }
+        });
+    });
+
+    routeGroups.forEach((group, groupId) => {
+        group.forEach((route) => {
+            environment[route.startRoad][
+                selectedManoeuvre == Manoeuvres.LEFTTURN ? "priorityLeftSignalLight" : "straightRightSignalLight"
+            ] = Light.GREEN;
         });
     });
 };
