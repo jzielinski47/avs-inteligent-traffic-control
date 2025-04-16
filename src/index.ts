@@ -6,7 +6,7 @@ import assignManoeuvre from "./utils/assignManoeuvre";
 import { handleVehicleMovement } from "./utils/handleVehicleMovement";
 import { resetTrafficLights } from "./utils/resetTrafficLights";
 import { trafficController as runTrafficLightsControlSystem } from "./utils/trafficController";
-import { validateJson } from "./utils/validator";
+import validateJson from "./utils/validateJson";
 
 const fs = require("node:fs");
 
@@ -33,6 +33,7 @@ function main() {
                 if (!vehicleId || !startRoad || !endRoad) break;
 
                 const tempVehicle: Vehicle = { vehicleId, startRoad, endRoad, waitTime: 0 };
+                (tempVehicle.isEmergencyVehicle as boolean) = vehicleId.includes("emergency");
                 assignManoeuvre(tempVehicle);
 
                 environment[startRoad as Road].queue.push(tempVehicle);
@@ -68,3 +69,4 @@ function main() {
 }
 
 main();
+export default main;
