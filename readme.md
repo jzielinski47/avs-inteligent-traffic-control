@@ -110,7 +110,7 @@ Example stage before arbitration:
 }
 ```
 
-At this stage, Traffic Control System assigned priority to vehicle1 which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. Look at Scenario 1.
+At this stage, Traffic Control System assigned priority to vehicle1 which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See Scenario 1.
 
 Two individual instances of vehicle (vehicle1, vehicle2) leave the corssroad simultaniously as the signal for their manouevre is green.
 

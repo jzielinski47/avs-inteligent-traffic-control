@@ -25,10 +25,20 @@ export const assignMatchingRouteGroup = (priorityVehicle: Vehicle | null, dataSe
     });
 };
 
-export const resetTrafficLights = () => {
+export const updateTrafficLightsCycle = () => {
     for (const dir of directionNames) {
         const state = environment[dir];
-        state.priorityLeftSignalLight = Light.RED;
-        state.straightRightSignalLight = Light.RED;
+        if (state.priorityLeftSignalLight == Light.GREEN) {
+            state.priorityLeftSignalLight = Light.YELLOW;
+        }
+        if (state.straightRightSignalLight == Light.GREEN) {
+            state.straightRightSignalLight = Light.YELLOW;
+        }
+        if (state.priorityLeftSignalLight == Light.YELLOW) {
+            state.priorityLeftSignalLight = Light.RED;
+        }
+        if (state.straightRightSignalLight == Light.YELLOW) {
+            state.straightRightSignalLight = Light.RED;
+        }
     }
 };

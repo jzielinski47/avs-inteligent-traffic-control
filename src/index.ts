@@ -1,5 +1,5 @@
 import { trafficController as runTrafficLightsControlSystem } from "./controllers/trafficController";
-import { resetTrafficLights } from "./controllers/trafficLogic";
+import { updateTrafficLightsCycle } from "./controllers/trafficLogic";
 import { handleVehicleMovement } from "./services/handleVehicleMovement";
 import { directionNames, environment, output } from "./setup";
 import { Command } from "./types/interfaces/command.interface";
@@ -40,6 +40,8 @@ function main() {
 
                 break;
             case "step":
+                updateTrafficLightsCycle();
+
                 const leftVehicles: string[] = [];
 
                 runTrafficLightsControlSystem();
@@ -48,9 +50,9 @@ function main() {
 
                 console.log(index, environment);
 
-                resetTrafficLights();
-
                 output.stepStatuses.push({ leftVehicles });
+
+                updateTrafficLightsCycle();
                 break;
         }
 
