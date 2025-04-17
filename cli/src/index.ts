@@ -82,7 +82,7 @@ function main(inputPath: string, outputPath: string) {
     });
 
     try {
-        fs.writeFileSync(outputPath, JSON.stringify(output));
+        fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
     } catch (err) {
         console.error(err);
         process.exit(1);
