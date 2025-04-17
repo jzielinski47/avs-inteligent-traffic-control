@@ -2,6 +2,7 @@ import { Directions } from "../types/enums/direction.enum";
 import { Lights } from "../types/enums/light.enum";
 import { Manoeuvres } from "../types/enums/manoeuvres.enum";
 import { Environment } from "../types/interfaces/environment.interface";
+import Output from "../types/interfaces/output.interface";
 
 const defaultLightSignal: Lights = Lights.RED;
 
@@ -28,7 +29,7 @@ export const environment: Environment = {
     },
 };
 
-export const output: { stepStatuses: { leftVehicles: string[] }[] } = {
+export const output: Output = {
     stepStatuses: [],
 };
 
