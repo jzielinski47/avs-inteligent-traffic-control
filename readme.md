@@ -1,4 +1,4 @@
-# AVS inteligent traffic control system
+# AVS intelligent traffic control system
 
 ## Overview
 
@@ -15,12 +15,12 @@
 
 ## Simulation Algorithm
 
-The algorithm takes two file paths on input: `input.json` and `output.json`
-1. The paths are validated to ensure they're .json files. If not, an exception is thrown and the program stops running.
-2. `input.json` consists of a given structure of command types. I iterate over the given commands and decide on the action.
+1. The algorithm accepts two file paths as input: `input.json` and `output.json`
+2. These paths are validated to ensure they point to `.json` files. If validation fails, an exception is thrown and the program terminates.
+3. The `input.json` file contains an array of commands. The program iterates over each command and executes the appropriate action described below.
 
 ### addVehicle Command
-Creates a vehicle in the virtual environment and appends it to a queue in the origin direction. The algorithm takes the already given fields visible in the sample input and assigns 3 new ones: 
+This command creates a vehicle in the **virtual environment** and appends it to the queue corresponding to the specified origin direction (eg. north, south, etc.). In addition to the fields provided in the input, the algorithm dynamically assigns three new properties to the vehicle:
 
 | Fields             	| Type       	| Origin     	| Description                                                         	|
 |--------------------	|------------	|------------	|---------------------------------------------------------------------	|
@@ -46,16 +46,16 @@ Sample input:
 ```
 
 ### step Command
-Runs the simulation step for the virtual environment.
+Runs the simulation step for the **virtual environment**.
 
-1. The first step is to update the existing traffic light cycle. All yellow lights from the previous step become red.
-2. leftVehicles[] table is initialized
-3. There's an arbitrage for the vehicle priority based on the waitTime index of each vehicle, unless it's the emergency vehicle status.
-4. When a single priority vehicle has been selected, the algorithm determines its manoeuvre and chooses the traffic pattern which matches it: See [##Traffic Control Algorithm](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#traffic-control-algorithm)
-5. The next step is to set the relevant traffic signals green and make sure our priority vehicle passes. As we set a green signal for the entire non-colliding pattern, all the vehicles that have a green light are allowed to pass simultaneously.
-6. Next, we handle each individual vehicle movement. If they have a green light for their intended manoeuvre, they can pass, if not not. Not applicable to the emergency vehicle which can pass either way, but the system creates green light for them anyway.
-7. Each vehicle that leaves is assigned to the leftVehicles table and added to the output object.
-8. We update  the existing traffic light cycle again. All green lights from this step become yellow.
+1. The system begins by updating the current traffic light cycle. All `YELLOW` lights from the previous step are transitioned to `RED`.
+2. The `leftVehicles[]` array is initialized to track vehicles that will leave the intersection during this step.
+3. The system performs arbitration to determine vehicle priority. Priority is assigned based on the longest wait time (waitTime), unless an emergency vehicle is present, in which case it takes precedence.
+4. Once a single priority vehicle is selected, the system determines its intended manoeuvre and selects a traffic pattern group that accommodates it. See [Traffic Control Algorithm](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#traffic-control-algorithm)
+5. All signals corresponding to the selected traffic pattern group are set to `GREEN`. As the group contains only non-conflicting routes, multiple vehicles may proceed simultaneously if their manoeuvres match the active green signals.
+6. Each vehicle is evaluated for movement. If the signal for its manoeuvre is `GREEN`, it is allowed to proceed. Emergency vehicles are always allowed to pass, but the system ensures that a green signal is provided for them regardless.
+7. All vehicles that successfully pass through the intersection during this step are added to the leftVehicles[] array, which is then stored in the simulation output.
+8. Finally, the system updates the traffic light cycle again: all lights currently set to `GREEN` are transitioned to `YELLOW`, preparing for the next phase.
 
 Sample input:
 ```json
@@ -69,7 +69,7 @@ Sample input:
 ## Traffic Control Algorithm
 
 I thought of a system that relies on the time the vehicle waits at the crossroad.
-The priority is assigned to the vehicle that has waited the longest, with an exception for the Emergency vehicles.
+The priority is assigned to the vehicle that has waited the longest, with an exception for Emergency vehicles.
 
 The traffic is considered in four non-colliding route patterns:
 ![alt text](scenarios.jpg)
@@ -99,7 +99,7 @@ The traffic is considered in four non-colliding route patterns:
 ];
 ```
 
-The priority is assigned to the vehicle in their turn, and the route matching the vehicle's desired manoeuvre is opened. Simultaneously, all non-colliding routes for that path are opened, and different vehicles awaiting their turn can proceed if their manoeuvre matches with the green light.
+The priority is assigned to the vehicle in its turn, and the route matching the vehicle's desired manoeuvre is opened. Simultaneously, all non-colliding routes for that path are opened, and different vehicles awaiting their turn can proceed if their manoeuvre matches with the green light.
 
 ### Example behaviour
 
@@ -163,7 +163,7 @@ Example stage before arbitration:
 }
 ```
 
-At this stage, Traffic Control System assigned priority to vehicle1 which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See Scenario 1.
+At this stage, the Traffic Control System assigned priority to vehicle1 which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See Scenario 1.
 
 Two individual instances of vehicle (vehicle1, vehicle2) leave the corssroad simultaniously as the signal for their manouevre is green.
 
@@ -225,7 +225,7 @@ Output JSON:
 
 When the system detects that an emergency vehicle appears at the crossroad, all lights instantly change the priority to let the emergency vehicle pass safely. This approach is a common practice in the United States to improve emergency response times. For further details, see: https://en.wikipedia.org/wiki/Traffic_signal_preemption
 
-In order to simulate the emergency vehicle, add a vehicle with ID which contains word: `emergency`
+In order to simulate the emergency vehicle, add a vehicle with ID that contains word `emergency`
 ![emergency](https://github.com/user-attachments/assets/0d021013-07cf-4be9-9e17-bea86f4f847f)
 
 As demonstrated in the example above, although the **vehicle** originating from the **north** has been waiting longer than the **emergency vehicle** coming from the **south**, priority is given to the **emergency vehicle** to ensure immediate passage regardless of the queue position. On the right, you can see the Emergency Vehicle passing before the cars that have higher priority (based on the waiting time).
