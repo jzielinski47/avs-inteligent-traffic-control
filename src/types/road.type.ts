@@ -1,3 +1,3 @@
-import { Direction } from "./enums/direction.enum";
+import { Directions } from "./enums/direction.enum";
 
-export type Road = `${Direction}`;
+export type Road = `${Directions}`;

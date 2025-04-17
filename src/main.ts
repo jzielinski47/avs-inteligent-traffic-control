@@ -2,6 +2,7 @@ import { trafficController as runTrafficLightsControlSystem } from "./controller
 import { updateTrafficLightsCycle } from "./controllers/trafficLogic";
 import { handleVehicleMovement } from "./services/handleVehicleMovement";
 import { directionNames, environment, output } from "./setup";
+import { Commands } from "./types/enums/command.enum";
 import { Command } from "./types/interfaces/command.interface";
 import { Vehicle } from "./types/interfaces/vehicle.interface";
 import { Road } from "./types/road.type";
@@ -10,41 +11,55 @@ import validateJson from "./utils/validateJson";
 
 const fs = require("node:fs");
 
-function main() {
-    const inputPath = process.argv[2];
-    const outputPath = process.argv[3];
+const inputPath = process.argv[2];
+const outputPath = process.argv[3];
 
-    try {
-        validateJson(process.argv[2], process.argv[3]);
-    } catch (e) {
-        e instanceof Error ? console.error("Error", e.message) : null;
-        process.exit(1);
-    }
+try {
+    validateJson(inputPath, outputPath);
+} catch (e) {
+    e instanceof Error ? console.error("Error", e.message) : null;
+    process.exit(1);
+}
 
+function main(inputPath: string, outputPath: string) {
     const input = JSON.parse(fs.readFileSync(inputPath, "utf-8"));
     const steps = input.commands;
 
     steps.forEach((step: Command, index: number) => {
-        const command: string = step.type;
+        const command: Commands | string = step.type;
         console.log(index, command, environment);
         switch (command) {
-            case "addVehicle":
-                const { vehicleId, startRoad, endRoad } = step; // TODO: validate if startRoad and endRoad map the Direction type
+            case Commands.ADDVEHICLE:
+                const { vehicleId, startRoad, endRoad } = step;
                 if (!vehicleId || !startRoad || !endRoad) break;
 
-                const tempVehicle: Vehicle = { vehicleId, startRoad, endRoad, waitTime: 0 };
-                (tempVehicle.isEmergencyVehicle as boolean) = vehicleId.includes("emergency");
+                const tempVehicle: Vehicle = {
+                    vehicleId,
+                    startRoad,
+                    endRoad,
+                    waitTime: 0,
+                    isEmergencyVehicle: vehicleId.includes("emergency"),
+                };
+
                 assignManoeuvre(tempVehicle);
 
                 environment[startRoad as Road].queue.push(tempVehicle);
 
                 break;
-            case "step":
+            case Commands.STEP:
+                // Updates lights: all YELLOW -> RED;
                 updateTrafficLightsCycle();
 
                 const leftVehicles: string[] = [];
 
                 runTrafficLightsControlSystem();
+
+                console.log(`Step ${index}: queue lengths`, {
+                    north: environment.north.queue.length,
+                    south: environment.south.queue.length,
+                    east: environment.east.queue.length,
+                    west: environment.west.queue.length,
+                });
 
                 handleVehicleMovement(leftVehicles);
 
@@ -52,7 +67,11 @@ function main() {
 
                 output.stepStatuses.push({ leftVehicles });
 
+                // Updates lights: all GREEN -> YELLOW;
                 updateTrafficLightsCycle();
+                break;
+            default:
+                console.warn(`Unknown command: ${command}`);
                 break;
         }
 
@@ -70,5 +89,5 @@ function main() {
     }
 }
 
-main();
+main(inputPath, outputPath);
 export default main;

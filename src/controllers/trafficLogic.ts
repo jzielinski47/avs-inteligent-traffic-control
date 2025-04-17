@@ -1,5 +1,5 @@
 import { directionNames, environment, routeGroups } from "../setup";
-import { Light } from "../types/enums/light.enum";
+import { Lights } from "../types/enums/light.enum";
 import { Manoeuvres } from "../types/enums/manoeuvres.enum";
 import { routeGroupDTO } from "../types/interfaces/routeGroupDTO.interface";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
@@ -10,7 +10,7 @@ export const setGreenLightsForGroup = (id: number, selectedManoeuvre: Manoeuvres
         const lightType =
             selectedManoeuvre === Manoeuvres.LEFTTURN ? "priorityLeftSignalLight" : "straightRightSignalLight";
 
-        environment[route.startRoad][lightType] = Light.GREEN;
+        environment[route.startRoad][lightType] = Lights.GREEN;
     });
 };
 
@@ -28,17 +28,17 @@ export const assignMatchingRouteGroup = (priorityVehicle: Vehicle | null, dataSe
 export const updateTrafficLightsCycle = () => {
     for (const dir of directionNames) {
         const state = environment[dir];
-        if (state.priorityLeftSignalLight == Light.GREEN) {
-            state.priorityLeftSignalLight = Light.YELLOW;
+        if (state.priorityLeftSignalLight == Lights.GREEN) {
+            state.priorityLeftSignalLight = Lights.YELLOW;
         }
-        if (state.straightRightSignalLight == Light.GREEN) {
-            state.straightRightSignalLight = Light.YELLOW;
+        if (state.straightRightSignalLight == Lights.GREEN) {
+            state.straightRightSignalLight = Lights.YELLOW;
         }
-        if (state.priorityLeftSignalLight == Light.YELLOW) {
-            state.priorityLeftSignalLight = Light.RED;
+        if (state.priorityLeftSignalLight == Lights.YELLOW) {
+            state.priorityLeftSignalLight = Lights.RED;
         }
-        if (state.straightRightSignalLight == Light.YELLOW) {
-            state.straightRightSignalLight = Light.RED;
+        if (state.straightRightSignalLight == Lights.YELLOW) {
+            state.straightRightSignalLight = Lights.RED;
         }
     }
 };

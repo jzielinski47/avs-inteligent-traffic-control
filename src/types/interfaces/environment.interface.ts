@@ -1,4 +1,4 @@
-import { Light } from "../enums/light.enum";
+import { Lights } from "../enums/light.enum";
 import { Vehicle } from "./vehicle.interface";
 
 export interface Environment {
@@ -9,7 +9,7 @@ export interface Environment {
 }
 
 interface Road {
-    priorityLeftSignalLight: Light;
-    straightRightSignalLight: Light;
-    queue: Vehicle[];  
+    priorityLeftSignalLight: Lights;
+    straightRightSignalLight: Lights;
+    queue: Vehicle[];
 }

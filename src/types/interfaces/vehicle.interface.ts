@@ -5,6 +5,6 @@ export interface Vehicle {
     startRoad: string;
     endRoad: string;
     waitTime: number;
-    manoeuvre?: Manoeuvres
-    isEmergencyVehicle?: true;
+    manoeuvre?: Manoeuvres;
+    isEmergencyVehicle: boolean;
 }

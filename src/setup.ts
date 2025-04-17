@@ -1,27 +1,27 @@
-import { Direction } from "./types/enums/direction.enum";
-import { Light } from "./types/enums/light.enum";
+import { Directions } from "./types/enums/direction.enum";
+import { Lights } from "./types/enums/light.enum";
 import { Manoeuvres } from "./types/enums/manoeuvres.enum";
 import { Environment } from "./types/interfaces/environment.interface";
 
-const defaultLightSignal: Light = Light.RED;
+const defaultLightSignal: Lights = Lights.RED;
 
 export const environment: Environment = {
-    [Direction.NORTH]: {
+    [Directions.NORTH]: {
         priorityLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },
-    [Direction.EAST]: {
+    [Directions.EAST]: {
         priorityLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },
-    [Direction.SOUTH]: {
+    [Directions.SOUTH]: {
         priorityLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },
-    [Direction.WEST]: {
+    [Directions.WEST]: {
         priorityLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
@@ -32,27 +32,27 @@ export const output: { stepStatuses: { leftVehicles: string[] }[] } = {
     stepStatuses: [],
 };
 
-export const directionNames = Object.values(Direction) as Direction[];
+export const directionNames = Object.values(Directions) as Directions[];
 
-export const routeGroups: { startRoad: Direction; endRoad: Direction; type: Manoeuvres }[][] = [
+export const routeGroups: { startRoad: Directions; endRoad: Directions; type: Manoeuvres }[][] = [
     [
-        { startRoad: Direction.SOUTH, endRoad: Direction.WEST, type: Manoeuvres.LEFTTURN },
-        { startRoad: Direction.NORTH, endRoad: Direction.EAST, type: Manoeuvres.LEFTTURN },
+        { startRoad: Directions.SOUTH, endRoad: Directions.WEST, type: Manoeuvres.LEFTTURN },
+        { startRoad: Directions.NORTH, endRoad: Directions.EAST, type: Manoeuvres.LEFTTURN },
     ],
     [
-        { startRoad: Direction.SOUTH, endRoad: Direction.EAST, type: Manoeuvres.RIGHTTURN },
-        { startRoad: Direction.SOUTH, endRoad: Direction.NORTH, type: Manoeuvres.STRAIGHT },
-        { startRoad: Direction.NORTH, endRoad: Direction.WEST, type: Manoeuvres.RIGHTTURN },
-        { startRoad: Direction.NORTH, endRoad: Direction.SOUTH, type: Manoeuvres.STRAIGHT },
+        { startRoad: Directions.SOUTH, endRoad: Directions.EAST, type: Manoeuvres.RIGHTTURN },
+        { startRoad: Directions.SOUTH, endRoad: Directions.NORTH, type: Manoeuvres.STRAIGHT },
+        { startRoad: Directions.NORTH, endRoad: Directions.WEST, type: Manoeuvres.RIGHTTURN },
+        { startRoad: Directions.NORTH, endRoad: Directions.SOUTH, type: Manoeuvres.STRAIGHT },
     ],
     [
-        { startRoad: Direction.WEST, endRoad: Direction.NORTH, type: Manoeuvres.LEFTTURN },
-        { startRoad: Direction.EAST, endRoad: Direction.SOUTH, type: Manoeuvres.LEFTTURN },
+        { startRoad: Directions.WEST, endRoad: Directions.NORTH, type: Manoeuvres.LEFTTURN },
+        { startRoad: Directions.EAST, endRoad: Directions.SOUTH, type: Manoeuvres.LEFTTURN },
     ],
     [
-        { startRoad: Direction.WEST, endRoad: Direction.SOUTH, type: Manoeuvres.RIGHTTURN },
-        { startRoad: Direction.WEST, endRoad: Direction.EAST, type: Manoeuvres.STRAIGHT },
-        { startRoad: Direction.EAST, endRoad: Direction.NORTH, type: Manoeuvres.RIGHTTURN },
-        { startRoad: Direction.EAST, endRoad: Direction.WEST, type: Manoeuvres.STRAIGHT },
+        { startRoad: Directions.WEST, endRoad: Directions.SOUTH, type: Manoeuvres.RIGHTTURN },
+        { startRoad: Directions.WEST, endRoad: Directions.EAST, type: Manoeuvres.STRAIGHT },
+        { startRoad: Directions.EAST, endRoad: Directions.NORTH, type: Manoeuvres.RIGHTTURN },
+        { startRoad: Directions.EAST, endRoad: Directions.WEST, type: Manoeuvres.STRAIGHT },
     ],
 ];

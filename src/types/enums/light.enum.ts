@@ -1,4 +1,4 @@
-export enum Light {
+export enum Lights {
     RED = "red",
     YELLOW = "yellow",
     GREEN = "green",
