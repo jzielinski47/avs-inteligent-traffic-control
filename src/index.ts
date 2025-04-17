@@ -1,6 +1,6 @@
-import { handleVehicleMovement } from "./core/handleVehicleMovement";
-import { resetTrafficLights } from "./core/resetTrafficLights";
-import { trafficController as runTrafficLightsControlSystem } from "./core/trafficController/trafficController";
+import { trafficController as runTrafficLightsControlSystem } from "./controllers/trafficController";
+import { resetTrafficLights } from "./controllers/trafficLogic";
+import { handleVehicleMovement } from "./services/handleVehicleMovement";
 import { directionNames, environment, output } from "./setup";
 import { Command } from "./types/interfaces/command.interface";
 import { Vehicle } from "./types/interfaces/vehicle.interface";

@@ -1,7 +1,6 @@
-import { routeGroupDTO } from "../../types/interfaces/routeGroupDTO.interface";
-import { getPriorityVehicle } from "../../utils/assignPriority";
-import assignMatchingRouteGroup from "./getMatchingRouteGroup";
-import setGreenLightsForGroup from "./setGreenLightsForGroup";
+import { routeGroupDTO } from "../types/interfaces/routeGroupDTO.interface";
+import { getPriorityVehicle } from "../utils/assignPriority";
+import { assignMatchingRouteGroup, setGreenLightsForGroup } from "./trafficLogic";
 
 export const trafficController = () => {
     const priorityVehicle = getPriorityVehicle();
