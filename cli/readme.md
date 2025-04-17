@@ -4,11 +4,12 @@
 
 ## Functional Requirements Fulfilled
 - Realistic four-way intersection simulation with four approaches: **north, south, east, and west**
+- Realistic traffic light cycle simulation following a three-phase system: **green** - **yellow** - **red**, including protected left-turn signals
 - Vehicles can perform the following manoeuvres: **left turn, right turn, and going straight**
 - Vehicles are placed into queues based on their entry direction
 - The system assigns green lights to non-colliding traffic routes using predefined route groups
 - Traffic priority is based on how long a vehicle has been waiting at the intersection
-- Colliding-free signal phases are ensured — no colliding routes receive green lights at the same time
+- Colliding-free signal phases are ensured - no colliding routes receive green lights at the same time
 
 ## Additional Features
 - Emergency vehicle preemption is implemented: emergency vehicles get immediate passage regardless of queue position
