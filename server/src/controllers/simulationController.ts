@@ -1,30 +1,15 @@
-import { trafficController as runTrafficController } from "./controllers/trafficController";
-import { updateTrafficLightsCycle } from "./controllers/trafficLogic";
-import { handleVehicleMovement } from "./services/handleVehicleMovement";
-import { directionNames, environment, output } from "./config/config";
-import { Commands } from "./types/enums/command.enum";
-import { Command } from "./types/interfaces/command.interface";
-import { Vehicle } from "./types/interfaces/vehicle.interface";
-import { Road } from "./types/road.type";
+import { directionNames, environment } from "../models/model";
+import { Commands } from "../types/enums/command.enum";
+import Command from "../types/interfaces/command.interface";
+import Output from "../types/interfaces/output.interface";
+import { Vehicle } from "../types/interfaces/vehicle.interface";
+import { Road } from "../types/road.type";
 import assignManoeuvre from "./utils/assignManoeuvre";
-import validateJson from "./utils/validateJson";
+import { handleVehicleMovement } from "./utils/handleVehicleMovement";
+import { trafficController } from "./utils/trafficController";
+import { updateTrafficLightsCycle } from "./utils/trafficLogic";
 
-const fs = require("node:fs");
-
-const inputPath = process.argv[2];
-const outputPath = process.argv[3];
-
-try {
-    validateJson(inputPath, outputPath);
-} catch (e) {
-    e instanceof Error ? console.error("Error", e.message) : null;
-    process.exit(1);
-}
-
-function main(inputPath: string, outputPath: string) {
-    const input = JSON.parse(fs.readFileSync(inputPath, "utf-8"));
-    const steps = input.commands;
-
+const runSimulation = (steps: Command[], output: Output) => {
     steps.forEach((step: Command, index: number) => {
         const command: Commands | string = step.type;
         console.log(index, command, environment);
@@ -52,7 +37,7 @@ function main(inputPath: string, outputPath: string) {
 
                 const leftVehicles: string[] = [];
 
-                runTrafficController();
+                trafficController();
 
                 console.log(`Step ${index}: queue lengths`, {
                     north: environment.north.queue.length,
@@ -80,14 +65,6 @@ function main(inputPath: string, outputPath: string) {
             state.queue.forEach((vehicle) => (vehicle.waitTime += 1));
         }
     });
+};
 
-    try {
-        fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
-    } catch (err) {
-        console.error(err);
-        process.exit(1);
-    }
-}
-
-main(inputPath, outputPath);
-export default main;
+export default runSimulation;
