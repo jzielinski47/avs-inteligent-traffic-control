@@ -1,7 +1,7 @@
 import { trafficController as runTrafficLightsControlSystem } from "./controllers/trafficController";
 import { updateTrafficLightsCycle } from "./controllers/trafficLogic";
 import { handleVehicleMovement } from "./services/handleVehicleMovement";
-import { directionNames, environment, output } from "./setup";
+import { directionNames, environment, output } from "./config/config";
 import { Commands } from "./types/enums/command.enum";
 import { Command } from "./types/interfaces/command.interface";
 import { Vehicle } from "./types/interfaces/vehicle.interface";

@@ -1,4 +1,4 @@
-import { routePatterns } from "../setup";
+import { routePatterns } from "../config/config";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
 
 const assignManoeuvre = (tempVehicle: Vehicle) => {

@@ -1,4 +1,4 @@
-import { directionNames, environment } from "../setup";
+import { directionNames, environment } from "../config/config";
 import { Lights } from "../types/enums/light.enum";
 import { Manoeuvres } from "../types/enums/manoeuvres.enum";
 

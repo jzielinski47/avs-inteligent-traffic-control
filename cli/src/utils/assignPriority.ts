@@ -1,4 +1,4 @@
-import { directionNames, environment } from "../setup";
+import { directionNames, environment } from "../config/config";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
 
 export const getPriorityVehicle = (): Vehicle | null => {
