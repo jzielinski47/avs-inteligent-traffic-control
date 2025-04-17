@@ -4,6 +4,7 @@ const validateReqBody = (req: Request, res: Response, next: NextFunction) => {
     const input = req.body;
     if (!input || typeof input !== "object") {
         res.status(400).json({ msg: "Missing or invalid JSON body." });
+        return;
     }
 
     next();

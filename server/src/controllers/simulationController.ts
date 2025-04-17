@@ -1,4 +1,4 @@
-import { directionNames, environment } from "../models/model";
+import { directionNames, environment, runtimeMemory } from "../models/model";
 import { Commands } from "../types/enums/command.enum";
 import Command from "../types/interfaces/command.interface";
 import Output from "../types/interfaces/output.interface";
@@ -12,7 +12,7 @@ import { updateTrafficLightsCycle } from "./utils/trafficLogic";
 const runSimulation = (steps: Command[], output: Output) => {
     steps.forEach((step: Command, index: number) => {
         const command: Commands | string = step.type;
-        console.log(index, command, environment);
+        // console.log(index, command, environment);
         switch (command) {
             case Commands.ADDVEHICLE:
                 const { vehicleId, startRoad, endRoad } = step;
@@ -39,16 +39,16 @@ const runSimulation = (steps: Command[], output: Output) => {
 
                 trafficController();
 
-                console.log(`Step ${index}: queue lengths`, {
-                    north: environment.north.queue.length,
-                    south: environment.south.queue.length,
-                    east: environment.east.queue.length,
-                    west: environment.west.queue.length,
-                });
+                // console.log(`Step ${index}: queue lengths`, {
+                //     north: environment.north.queue.length,
+                //     south: environment.south.queue.length,
+                //     east: environment.east.queue.length,
+                //     west: environment.west.queue.length,
+                // });
 
                 handleVehicleMovement(leftVehicles);
 
-                console.log(index, environment);
+                // console.log(index, environment);
 
                 output.stepStatuses.push({ leftVehicles });
 

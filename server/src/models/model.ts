@@ -30,10 +30,6 @@ export const environment: Environment = {
     },
 };
 
-export const output: Output = {
-    stepStatuses: [],
-};
-
 export const directionNames = Object.values(Directions) as Directions[];
 
 export const routePatterns: { startRoad: Directions; endRoad: Directions; type: Manoeuvres }[][] = [
