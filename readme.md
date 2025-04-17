@@ -10,8 +10,61 @@
 - Traffic priority is based on how long a vehicle has been waiting at the intersection
 - Colliding-free signal phases are ensured — no colliding routes receive green lights at the same time
 
-## Aditional Features
+## Additional Features
 - Emergency vehicle preemption is implemented: emergency vehicles get immediate passage regardless of queue position
+
+## Simulation Algorithm
+
+The algorithm takes two file paths on input: `input.json` and `output.json`
+1. The paths are validated to ensure they're .json files. If not, an exception is thrown and the program stops running.
+2. `input.json` consists of a given structure of command types. I iterate over the given commands and decide on the action.
+
+### addVehicle Command
+Creates a vehicle in the virtual environment and appends it to a queue in the origin direction. The algorithm takes the already given fields visible in the sample input and assigns 3 new ones: 
+
+| Fields             	| Type       	| Origin     	| Description                                                         	|
+|--------------------	|------------	|------------	|---------------------------------------------------------------------	|
+| vehicleId          	| string     	| input.json 	| determines the vehicle ID                                           	|
+| startRoad          	| string     	| input.json 	| determines vehicle origin                                           	|
+| endRoad            	| string     	| input.json 	| determines vehicle destination                                      	|
+| waitTime           	| number     	| runtime    	| time the vehicle spends at the crossroad, used to determine priority 	|
+| isEmergencyVehicle 	| boolean    	| runtime    	| emergency vehicle status, used to determine priority                 	|
+| manoeuvre          	| Manoeuvres 	| runtime    	| assigned dynamically to enhance the system workflow                  	|
+
+Sample input:
+```json
+{
+      "type": "addVehicle",
+
+      "vehicleId": "vehicle1",
+
+      "startRoad": "south",
+
+      "endRoad": "north"
+
+},
+```
+
+### step Command
+Runs the simulation step for the virtual environment.
+
+1. The first step is to update the existing traffic light cycle. All yellow lights from the previous step become red.
+2. leftVehicles[] table is initialized
+3. There's an arbitrage for the vehicle priority based on the waitTime index of each vehicle, unless it's the emergency vehicle status.
+4. When a single priority vehicle has been selected, the algorithm determines its manoeuvre and chooses the traffic pattern which matches it: See [##Traffic Control Algorithm](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#traffic-control-algorithm)
+5. The next step is to set the relevant traffic signals green and make sure our priority vehicle passes. As we set a green signal for the entire non-colliding pattern, all the vehicles that have a green light are allowed to pass simultaneously.
+6. Next, we handle each individual vehicle movement. If they have a green light for their intended manoeuvre, they can pass, if not not. Not applicable to the emergency vehicle which can pass either way, but the system creates green light for them anyway.
+7. Each vehicle that leaves is assigned to the leftVehicles table and added to the output object.
+8. We update  the existing traffic light cycle again. All green lights from this step become yellow.
+
+Sample input:
+```json
+{
+      "type": "step",
+},
+```
+
+
 
 ## Traffic Control Algorithm
 
