@@ -34,7 +34,7 @@ export const output: { stepStatuses: { leftVehicles: string[] }[] } = {
 
 export const directionNames = Object.values(Directions) as Directions[];
 
-export const routeGroups: { startRoad: Directions; endRoad: Directions; type: Manoeuvres }[][] = [
+export const routePatterns: { startRoad: Directions; endRoad: Directions; type: Manoeuvres }[][] = [
     [
         { startRoad: Directions.SOUTH, endRoad: Directions.WEST, type: Manoeuvres.LEFTTURN },
         { startRoad: Directions.NORTH, endRoad: Directions.EAST, type: Manoeuvres.LEFTTURN },

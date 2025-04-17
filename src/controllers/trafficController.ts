@@ -1,6 +1,6 @@
 import { routeGroupDTO } from "../types/interfaces/routeGroupDTO.interface";
 import { getPriorityVehicle } from "../utils/assignPriority";
-import { assignMatchingRouteGroup, setGreenLightsForGroup } from "./trafficLogic";
+import { assignMatchingRouteGroup, setGreenLightsForPattern } from "./trafficLogic";
 
 export const trafficController = () => {
     const priorityVehicle = getPriorityVehicle();
@@ -10,6 +10,6 @@ export const trafficController = () => {
 
     assignMatchingRouteGroup(priorityVehicle, dataSet);
 
-    if (dataSet.selectedGroup != undefined && dataSet.selectedManoeuvre != undefined)
-        setGreenLightsForGroup(dataSet.selectedGroup, dataSet.selectedManoeuvre);
+    if (dataSet.selectedPattern != undefined && dataSet.selectedManoeuvre != undefined)
+        setGreenLightsForPattern(dataSet.selectedPattern, dataSet.selectedManoeuvre);
 };

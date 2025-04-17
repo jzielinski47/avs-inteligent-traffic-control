@@ -1,12 +1,12 @@
-import { directionNames, environment, routeGroups } from "../setup";
+import { directionNames, environment, routePatterns } from "../setup";
 import { Lights } from "../types/enums/light.enum";
 import { Manoeuvres } from "../types/enums/manoeuvres.enum";
 import { routeGroupDTO } from "../types/interfaces/routeGroupDTO.interface";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
 
-export const setGreenLightsForGroup = (id: number, selectedManoeuvre: Manoeuvres) => {
-    const group = routeGroups[id as number];
-    group.forEach((route) => {
+export const setGreenLightsForPattern = (id: number, selectedManoeuvre: Manoeuvres) => {
+    const pattern = routePatterns[id as number];
+    pattern.forEach((route) => {
         const lightType =
             selectedManoeuvre === Manoeuvres.LEFTTURN ? "priorityLeftSignalLight" : "straightRightSignalLight";
 
@@ -15,11 +15,11 @@ export const setGreenLightsForGroup = (id: number, selectedManoeuvre: Manoeuvres
 };
 
 export const assignMatchingRouteGroup = (priorityVehicle: Vehicle | null, dataSet: routeGroupDTO) => {
-    routeGroups.forEach((group, groupId) => {
-        group.forEach((route) => {
+    routePatterns.forEach((pattern, patternID) => {
+        pattern.forEach((route) => {
             if (route.startRoad === priorityVehicle?.startRoad && route.endRoad === priorityVehicle?.endRoad) {
                 dataSet.selectedManoeuvre = priorityVehicle.manoeuvre as Manoeuvres;
-                dataSet.selectedGroup = groupId;
+                dataSet.selectedPattern = patternID;
             }
         });
     });

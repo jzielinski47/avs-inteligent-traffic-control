@@ -1,6 +1,6 @@
 import { Manoeuvres } from "../enums/manoeuvres.enum";
 
 export interface routeGroupDTO {
-    selectedGroup?: number;
+    selectedPattern?: number;
     selectedManoeuvre?: Manoeuvres;
 }

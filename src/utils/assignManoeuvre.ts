@@ -1,8 +1,8 @@
-import { routeGroups } from "../setup";
+import { routePatterns } from "../setup";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
 
 const assignManoeuvre = (tempVehicle: Vehicle) => {
-    routeGroups.forEach((group) => {
+    routePatterns.forEach((group) => {
         group.forEach((route) => {
             if (route.startRoad === tempVehicle.startRoad && route.endRoad === tempVehicle.endRoad) {
                 tempVehicle.manoeuvre = route.type;
