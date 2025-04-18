@@ -51,10 +51,11 @@ Runs the simulation step for the **virtual environment**.
 
 1. The system begins by updating the current traffic light cycle. All `YELLOW` lights from the previous step are transitioned to `RED`.
 2. The `leftVehicles[]` array is initialized to track vehicles that will leave the intersection during this step.
-3. The system performs arbitration to determine vehicle priority. Priority is assigned based on the longest wait time (waitTime), unless an emergency vehicle is present, in which case it takes precedence.
+3. The system performs arbitration to determine vehicle priority. Priority is assigned based on the longest wait time (`waitTime`), unless an emergency vehicle is present, regardless of queue position, in which case it takes precedence. 
+If the emergency vehicle is not at the front of the queue, it is moved there during arbitration to ensure priority access, similar to how an emergency corridor is formed in real-world traffic situations. See [Emergency Vehicle Precedence](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#emergency-vehicle-preemption)
 4. Once a single priority vehicle is selected, the system determines its intended manoeuvre and selects a traffic pattern group that accommodates it. See [Traffic Control Algorithm](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#traffic-control-algorithm)
 5. All signals corresponding to the selected traffic pattern group are set to `GREEN`. As the group contains only non-conflicting routes, multiple vehicles may proceed simultaneously if their manoeuvres match the active green signals.
-6. Each vehicle is evaluated for movement. If the signal for its manoeuvre is `GREEN`, it is allowed to proceed. Emergency vehicles are always allowed to pass, but the system ensures that a green signal is provided for them regardless.
+6. Each vehicle in the front row of the queue is evaluated for movement. If the signal for its manoeuvre is `GREEN`, it is allowed to proceed. Emergency vehicles are always allowed to pass, but the system ensures that a green signal is provided for them regardless.
 7. All vehicles that successfully pass through the intersection during this step are added to the leftVehicles[] array, which is then stored in the simulation output.
 8. Finally, the system updates the traffic light cycle again: all lights currently set to `GREEN` are transitioned to `YELLOW`, preparing for the next phase.
 
