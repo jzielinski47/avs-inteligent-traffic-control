@@ -29,7 +29,10 @@ cd server
 npm run demo
 ```
 3. Do exactly the same with `client` folder.
-
+```console
+cd client
+npm run demo
+```
 4. Open the webpage. Usually it's `http://localhost:4173/`; however, follow your terminal instructions.
 
 ## Functional Requirements Fulfilled
