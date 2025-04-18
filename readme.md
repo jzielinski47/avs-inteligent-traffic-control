@@ -28,8 +28,9 @@ cd server
 ```console
 npm run demo
 ```
-Do exactly the same with `client` folder.
-Open frontend page at c
+3. Do exactly the same with `client` folder.
+
+4. Open the webpage. Usually it's `http://localhost:4173/`; however, follow your terminal instructions.
 
 ## Functional Requirements Fulfilled
 - Realistic four-way intersection simulation with four approaches: **north, south, east, and west**
