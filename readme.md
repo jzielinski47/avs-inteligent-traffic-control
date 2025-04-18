@@ -228,7 +228,7 @@ Output JSON:
 
 When the system detects that an emergency vehicle appears at the crossroad, all lights instantly change the priority to let the emergency vehicle pass safely. This approach is a common practice in the United States to improve emergency response times. For further details, see: https://en.wikipedia.org/wiki/Traffic_signal_preemption
 
-In order to simulate the emergency vehicle, add a vehicle with ID that contains word `emergency`
+To simulate the emergency vehicle, add a vehicle with ID that contains word `emergency`
 ![emergency](https://github.com/user-attachments/assets/0d021013-07cf-4be9-9e17-bea86f4f847f)
 
-As demonstrated in the example above, although the **vehicle** originating from the **north** has been waiting longer than the **emergency vehicle** coming from the **south**, priority is given to the **emergency vehicle** to ensure immediate passage regardless of the queue position. On the right, you can see the Emergency Vehicle passing before the cars that have higher priority (based on the waiting time).
+As demonstrated in the example above, although the **vehicle** originating from the **north** has been waiting longer than the **emergency vehicle** coming from the **south**, priority is given to the **emergency vehicle** to ensure immediate passage regardless of the queue position. On the right, you can see the Emergency Vehicle passing before the cars that have higher priority (based on the waiting time). Similar to emergency colidor. This feature is done by moving the emergency vehicle to the top of the array during the arbitration process. 
