@@ -1,5 +1,5 @@
-import { routePatterns } from "../config/config";
-import { Vehicle } from "../types/interfaces/vehicle.interface";
+import { routePatterns } from "../../models/model";
+import { Vehicle } from "../../types/interfaces/vehicle.interface";
 
 const assignManoeuvre = (tempVehicle: Vehicle) => {
     routePatterns.forEach((group) => {

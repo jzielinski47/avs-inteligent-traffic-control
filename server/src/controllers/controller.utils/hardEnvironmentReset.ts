@@ -1,5 +1,5 @@
-import { directionNames, environment, output } from "../config/config";
-import { Lights } from "../types/enums/light.enum";
+import { directionNames, environment, output } from "../../models/model";
+import { Lights } from "../../types/enums/light.enum";
 
 const hardEnvironmentReset = () => {
     for (const dir of directionNames) {

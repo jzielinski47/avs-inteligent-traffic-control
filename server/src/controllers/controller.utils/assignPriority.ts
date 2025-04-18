@@ -1,5 +1,6 @@
-import { directionNames, environment } from "../config/config";
-import { Vehicle } from "../types/interfaces/vehicle.interface";
+import { directionNames, environment } from "../../models/model";
+import { Vehicle } from "../../types/interfaces/vehicle.interface";
+
 
 export const getPriorityVehicle = (): Vehicle | null => {
     let longestWaitTimeIndex = 0;

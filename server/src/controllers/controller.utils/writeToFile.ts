@@ -1,4 +1,5 @@
-import Output from "../types/interfaces/output.interface";
+import Output from "../../types/interfaces/output.interface";
+
 const fs = require("node:fs");
 
 const writeToFile = (outputPath: string, content: Output) => {

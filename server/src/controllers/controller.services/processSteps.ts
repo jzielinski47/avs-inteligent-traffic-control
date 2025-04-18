@@ -4,6 +4,10 @@ import Command from "../../types/interfaces/command.interface";
 import Output from "../../types/interfaces/output.interface";
 import { Vehicle } from "../../types/interfaces/vehicle.interface";
 import { Road } from "../../types/road.type";
+import { trafficController } from "../controller.controllers/trafficController";
+import { updateTrafficLightsCycle } from "../controller.controllers/trafficLogic";
+import assignManoeuvre from "../controller.utils/assignManoeuvre";
+import { handleVehicleMovement } from "./handleVehicleMovement";
 
 const processSteps = (steps: Command[]): Output => {
     steps.forEach((step: Command, index: number) => {
@@ -34,7 +38,7 @@ const processSteps = (steps: Command[]): Output => {
                 const leftVehicles: string[] = [];
 
                 
-                runTrafficController();
+                trafficController();
 
                 console.log(`Step ${index}: queue lengths`, {
                     north: environment.north.queue.length,
@@ -68,19 +72,3 @@ const processSteps = (steps: Command[]): Output => {
 };
 
 export default processSteps;
-function assignManoeuvre(tempVehicle: Vehicle) {
-    throw new Error("Function not implemented.");
-}
-
-function updateTrafficLightsCycle() {
-    throw new Error("Function not implemented.");
-}
-
-function runTrafficController() {
-    throw new Error("Function not implemented.");
-}
-
-function handleVehicleMovement(leftVehicles: string[]) {
-    throw new Error("Function not implemented.");
-}
-

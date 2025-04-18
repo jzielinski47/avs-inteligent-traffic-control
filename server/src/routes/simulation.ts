@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import validateReqBody from "../middlewares/validateReqBody";
-import { runtimeMemory } from "../models/model";
+import { output, runtimeMemory } from "../models/model";
 import runSimulation from "../controllers/simulationController";
 
 const simulation = Router();
@@ -25,9 +25,7 @@ simulation.post("/simulate", (req: Request, res: Response) => {
         res.status(400).json({ msg: "Import the commands first via /api/sim/import endpoint" });
         return;
     }
-
-    runSimulation(runtimeMemory.steps, runtimeMemory.output);
-    res.status(200).json({ msg: "Successfully run the simulation. See the results." });
+    res.status(200).json(runSimulation(runtimeMemory.steps));
 });
 
 simulation.get("/next", validateReqBody, (req: Request, res: Response) => {
@@ -46,8 +44,8 @@ simulation.get("/next", validateReqBody, (req: Request, res: Response) => {
 });
 
 simulation.get("/output", (req: Request, res: Response) => {
-    runtimeMemory.output != undefined && runtimeMemory.steps != undefined
-        ? res.status(200).json(runtimeMemory.output)
+    output != undefined && runtimeMemory.steps != undefined
+        ? res.status(200).json(output)
         : res.status(400).json({ msg: "import the commands first via /api/sim/import endpoint" });
     return;
 });

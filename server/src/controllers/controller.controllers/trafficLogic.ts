@@ -1,4 +1,4 @@
-import { directionNames, environment, routePatterns } from "../../config/config";
+import { routePatterns, environment, directionNames } from "../../models/model";
 import { Lights } from "../../types/enums/light.enum";
 import { Manoeuvres } from "../../types/enums/manoeuvres.enum";
 import { routeGroupDTO } from "../../types/interfaces/routeGroupDTO.interface";
