@@ -8,6 +8,7 @@ import { Road } from "../types/road.type";
 import assignManoeuvre from "../utils/assignManoeuvre";
 import { handleVehicleMovement } from "./handleVehicleMovement";
 import Output from "../types/interfaces/output.interface";
+import { getPriorityVehicle } from "../utils/assignPriority";
 
 const processSteps = (steps: Command[]): Output => {
     steps.forEach((step: Command, index: number) => {
@@ -37,6 +38,7 @@ const processSteps = (steps: Command[]): Output => {
 
                 const leftVehicles: string[] = [];
 
+                
                 runTrafficController();
 
                 console.log(`Step ${index}: queue lengths`, {
@@ -46,6 +48,7 @@ const processSteps = (steps: Command[]): Output => {
                     west: environment.west.queue.length,
                 });
 
+                
                 handleVehicleMovement(leftVehicles);
 
                 console.log(index, environment);

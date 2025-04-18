@@ -1,0 +1,23 @@
+{
+    "stepStatuses": [
+      {
+        "leftVehicles": [
+          "emergency"
+        ]
+      },
+      {
+        "leftVehicles": [
+          "vehicle3",
+          "vehicle1"
+        ]
+      },
+      {
+        "leftVehicles": [
+          "vehicle2"
+        ]
+      },
+      {
+        "leftVehicles": []
+      }
+    ]
+  }

@@ -10,7 +10,10 @@ export const getPriorityVehicle = (): Vehicle | null => {
 
         if (state.queue.length > 0) {
             const emergency = state.queue.find((vehicle) => vehicle.isEmergencyVehicle);
-            if (emergency) return emergency;
+            if (emergency) {
+                state.queue = promoteEmergencyVehicle(state.queue);
+                return emergency;
+            }
 
             const [frontVehicle] = state.queue;
             if (frontVehicle.waitTime > longestWaitTimeIndex) {
@@ -21,4 +24,13 @@ export const getPriorityVehicle = (): Vehicle | null => {
     }
 
     return longestWaitTimeVehicle;
+};
+
+const promoteEmergencyVehicle = (queue: Vehicle[]) => {
+    let index = queue.findIndex((vehicle) => vehicle.isEmergencyVehicle);
+    if (index > 0) {
+        const emergencyVehicle = queue[index];
+        return [emergencyVehicle, ...queue.slice(0, index), ...queue.slice(++index)];
+    }
+    return queue;
 };
