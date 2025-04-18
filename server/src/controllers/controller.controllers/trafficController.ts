@@ -1,11 +1,11 @@
 import { routeGroupDTO } from "../../types/interfaces/routeGroupDTO.interface";
-import { getPriorityVehicle } from "./assignPriority";
-import { assignMatchingRouteGroup, setGreenLightsForPattern } from "./trafficLogic";
-
+import { Vehicle } from "../../types/interfaces/vehicle.interface";
+import { getPriorityVehicle } from "../controller.utils/assignPriority";
+import { assignMatchingRouteGroup, setGreenLightsForPattern } from "../trafficLogic";
 
 export const trafficController = () => {
     const priorityVehicle = getPriorityVehicle();
-    console.log("priority", priorityVehicle);
+    console.log("priority assigned to ", priorityVehicle);
 
     const dataSet: routeGroupDTO = {};
 

@@ -62,7 +62,8 @@ export const runtimeMemory: PreProcessedData = {
         runtime: {},
         after: {},
     },
-    output: {
-        stepStatuses: [],
-    },
+};
+
+export const output: Output = {
+    stepStatuses: [],
 };

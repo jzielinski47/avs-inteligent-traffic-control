@@ -8,7 +8,7 @@ interface PreProcessedData {
         runtime?: {};
         after?: {};
     };
-    output: Output;
+   
 }
 
 export default PreProcessedData;
