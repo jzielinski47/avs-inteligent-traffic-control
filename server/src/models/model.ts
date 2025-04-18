@@ -1,9 +1,10 @@
 import { Directions } from "../types/enums/direction.enum";
 import { Lights } from "../types/enums/light.enum";
 import { Manoeuvres } from "../types/enums/manoeuvres.enum";
+import Command from "../types/interfaces/command.interface";
 import { Environment } from "../types/interfaces/environment.interface";
 import Output from "../types/interfaces/output.interface";
-import PreProcessedData from "../types/interfaces/preprocesseddata.interface";
+import Telemetry from "../types/interfaces/telemetry.interface";
 
 const defaultLightSignal: Lights = Lights.RED;
 
@@ -30,6 +31,8 @@ export const environment: Environment = {
     },
 };
 
+export const importedSteps: Command[] = [];
+
 export const directionNames = Object.values(Directions) as Directions[];
 
 export const routePatterns: { startRoad: Directions; endRoad: Directions; type: Manoeuvres }[][] = [
@@ -55,14 +58,7 @@ export const routePatterns: { startRoad: Directions; endRoad: Directions; type: 
     ],
 ];
 
-export const runtimeMemory: PreProcessedData = {
-    steps: [],
-    stages: {
-        before: {},
-        runtime: {},
-        after: {},
-    },
-};
+export const telemetry: Telemetry[] = [];
 
 export const output: Output = {
     stepStatuses: [],

@@ -1,14 +1,13 @@
 import Command from "./command.interface";
-import Output from "./output.interface";
+import { Environment } from "./environment.interface";
 
-interface PreProcessedData {
+interface RuntimeMemory {
     steps: Command[];
     stages?: {
-        before?: {};
-        runtime?: {};
-        after?: {};
+        before?: Environment[];
+        runtime?: Environment[];
+        after?: Environment[];
     };
-   
 }
 
-export default PreProcessedData;
+export default RuntimeMemory;

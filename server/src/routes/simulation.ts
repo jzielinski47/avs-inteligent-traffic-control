@@ -1,7 +1,8 @@
 import { Request, Response, Router } from "express";
 import validateReqBody from "../middlewares/validateReqBody";
-import { output, runtimeMemory } from "../models/model";
+import { importedSteps, output, telemetry } from "../models/model";
 import runSimulation from "../controllers/simulationController";
+import Command from "../types/interfaces/command.interface";
 
 const simulation = Router();
 
@@ -16,16 +17,26 @@ simulation.post("/import", validateReqBody, (req: Request, res: Response) => {
         return;
     }
 
-    runtimeMemory.steps = input.commands;
+    input.commands.forEach((c: Command) => importedSteps.push(c));
+
     res.status(200).json({ msg: "Successfully imported data." });
 });
 
 simulation.post("/simulate", (req: Request, res: Response) => {
-    if (!runtimeMemory.steps) {
+    if (!importedSteps) {
         res.status(400).json({ msg: "Import the commands first via /api/sim/import endpoint" });
         return;
     }
-    res.status(200).json(runSimulation(runtimeMemory.steps));
+    res.status(200).json(runSimulation(importedSteps));
+});
+
+simulation.get("/stat/:id", (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id);
+
+    telemetry[id] != undefined
+        ? res.status(200).json(telemetry[id])
+        : res.status(400).json({ msg: "unable to resolve the next step" });
+    return;
 });
 
 simulation.get("/next", validateReqBody, (req: Request, res: Response) => {
@@ -37,22 +48,22 @@ simulation.get("/next", validateReqBody, (req: Request, res: Response) => {
 
     const nextIndex = index++;
 
-    runtimeMemory.steps[nextIndex] != undefined
-        ? res.status(200).json(runtimeMemory.steps[nextIndex])
+    importedSteps[nextIndex] != undefined
+        ? res.status(200).json(importedSteps[nextIndex])
         : res.status(400).json({ msg: "unable to resolve the next step" });
     return;
 });
 
 simulation.get("/output", (req: Request, res: Response) => {
-    output != undefined && runtimeMemory.steps != undefined
+    output != undefined && importedSteps != undefined
         ? res.status(200).json(output)
         : res.status(400).json({ msg: "import the commands first via /api/sim/import endpoint" });
     return;
 });
 
 simulation.get("/steps", (req: Request, res: Response) => {
-    runtimeMemory.steps != undefined && runtimeMemory.steps.length > 0
-        ? res.status(200).json(runtimeMemory.steps)
+    importedSteps != undefined && importedSteps.length > 0
+        ? res.status(200).json(importedSteps)
         : res.status(400).json({ msg: "Import the commands first via /api/sim/import endpoint" });
     return;
 });
