@@ -2,6 +2,35 @@
 
 ## Overview
 
+## Setup
+
+### Standard task: Command Line Interface
+To run the regular task using the CLI app with a single command, follow these steps:
+1. Navigate to the `cli` folder:
+```console
+cd cli
+```
+2. Execute the following command:
+```console
+npm run demo input.json output.json
+```
+> Replace `input.json` and `output.json` with the actual file paths you want to use.
+
+### Fullstack application setup
+I've also prepared a full-stack application consisting of a REST API server and frontend to better visualize and track the traffic control system.
+
+To run the server
+1. Navigate to the `server` folder:
+```console
+cd server
+```
+2. Execute the following command:
+```console
+npm run demo
+```
+Do exactly the same with `client` folder.
+Open frontend page at c
+
 ## Functional Requirements Fulfilled
 - Realistic four-way intersection simulation with four approaches: **north, south, east, and west**
 - Realistic traffic light cycle simulation following a three-phase system: **green** - **yellow** - **red**, including protected left-turn signals
