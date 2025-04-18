@@ -1,0 +1,94 @@
+{
+    "stepStatuses": [
+        {
+            "leftVehicles": ["emergency2"]
+        },
+        {
+            "leftVehicles": ["emergency1"]
+        },
+        {
+            "leftVehicles": ["vehicle3", "vehicle1"]
+        },
+        {
+            "leftVehicles": ["vehicle6", "vehicle2"]
+        },
+        {
+            "leftVehicles": ["vehicle4", "vehicle7"]
+        },
+        {
+            "leftVehicles": ["vehicle5"]
+        },
+        {
+            "leftVehicles": ["vehicle12", "vehicle8"]
+        },
+        {
+            "leftVehicles": ["vehicle9"]
+        },
+        {
+            "leftVehicles": ["vehicle15", "vehicle10"]
+        },
+        {
+            "leftVehicles": ["vehicle11"]
+        },
+        {
+            "leftVehicles": ["vehicle16", "vehicle13"]
+        },
+        {
+            "leftVehicles": ["vehicle14"]
+        },
+        {
+            "leftVehicles": ["vehicle17"]
+        },
+        {
+            "leftVehicles": ["vehicle18"]
+        },
+        {
+            "leftVehicles": ["vehicle20", "vehicle19"]
+        },
+        {
+            "leftVehicles": ["vehicle21", "vehicle24"]
+        },
+        {
+            "leftVehicles": ["vehicle22"]
+        },
+        {
+            "leftVehicles": ["vehicle23"]
+        },
+        {
+            "leftVehicles": ["vehicle25"]
+        },
+        {
+            "leftVehicles": ["vehicle26"]
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        },
+        {
+            "leftVehicles": []
+        }
+    ]
+}
