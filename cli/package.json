@@ -7,7 +7,7 @@
         "build": "tsc --build",
         "start": "node ./dist/src/index.js",
         "dev": "nodemon --watch src --ext ts --exec \"ts-node --files\" ./src/index.ts",
-        "demo": "tsc --build && node ./dist/src/index.js"
+        "demo": "npm i && tsc --build && node ./dist/src/index.js"
     },
     "keywords": [],
     "author": "",
