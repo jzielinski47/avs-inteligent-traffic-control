@@ -6,14 +6,15 @@ import HUIButton from "./components/HUIButton";
 import InputFile from "./components/InputFile";
 import PanelWrapper from "./components/PanelWrapper";
 import Command from "./types/interfaces/command.interface";
+import { importData } from "./services/simulation";
 
 const App = () => {
     const [step, setStep] = useState<number>(0);
-    const [maxSteps, setMaxSteps] = useState<number>(12);
+    const [maxSteps, setMaxSteps] = useState<number>(5);
     const [inputData, setInputData] = useState<Command[]>();
-    const [isActiveSimBut, setIsActiveSimBut] = useState<boolean>(false);
+    const [isSimulated, setIsSimulated] = useState<boolean>(false);
 
-    const readInputFile = (e: React.FormEvent<HTMLInputElement>) => {
+    const readInputFile = async (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
         const target = e.target as HTMLInputElement & { files: FileList };
         if (target.files[0].type !== "application/json") return;
@@ -34,9 +35,28 @@ const App = () => {
         reader.readAsText(target.files[0]);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        // TODO: let user change the input
+    };
+
+    const handleDataImport = async () => {
+        await importData(inputData as Command[]);
+        console.log("sending");
+    };
+
     useEffect(() => {
-        if (inputData) setIsActiveSimBut(true);
+        if (inputData) {
+            setIsSimulated(true);
+        }
     }, [inputData]);
+
+    const handleNextStep = () => {
+        if (step < maxSteps) setStep(step + 1);
+    };
+
+    const handlePreviousStep = () => {
+        if (step > 0) setStep(step - 1);
+    };
 
     return (
         <div className="app flex p-4 items-center w-full h-full flex-col p-4">
@@ -47,6 +67,7 @@ const App = () => {
                         label={"Upload insert.json"}
                         description="You can either upload it here or enter the relevant json in the textfield below."
                         action={readInputFile}
+                        action2={handleDataImport}
                     />
                     <Textarea
                         className={
@@ -56,6 +77,7 @@ const App = () => {
                         rows={28}
                         name="inputDisplay"
                         value={JSON.stringify(inputData, null, 2)}
+                        onChange={handleInputChange}
                     />
                 </PanelWrapper>
                 <PanelWrapper>
@@ -69,8 +91,12 @@ const App = () => {
                                     Step: <span className="text-primary">{step as React.ReactNode}</span>
                                 </p>
                                 <div className="flex flex-row gap-2">
-                                    <HUIButton>Previous step</HUIButton>
-                                    <HUIButton>Next step</HUIButton>
+                                    <HUIButton disabled={!isSimulated} action={handlePreviousStep}>
+                                        Previous step
+                                    </HUIButton>
+                                    <HUIButton disabled={!isSimulated} action={handleNextStep}>
+                                        Next step
+                                    </HUIButton>
                                 </div>
                             </div>
                             <Field className="w-full h-full">

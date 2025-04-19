@@ -5,9 +5,10 @@ interface iInputFile {
     label: string;
     description?: string;
     action: (e: React.FormEvent<HTMLInputElement>) => void;
+    action2?: () => void;
 }
 
-const InputFile = ({ label, description, action }: iInputFile) => {
+const InputFile = ({ label, description, action, action2 }: iInputFile) => {
     return (
         <Field>
             <Label className="text-sm/6 font-medium text-white">{label}</Label>
@@ -20,7 +21,7 @@ const InputFile = ({ label, description, action }: iInputFile) => {
                     onChange={action}
                     accept="application/json"
                 />
-                <HUIButton>Upload</HUIButton>
+                <HUIButton action={action2}>Upload</HUIButton>
             </div>
         </Field>
     );

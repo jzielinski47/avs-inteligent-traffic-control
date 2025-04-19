@@ -7,7 +7,7 @@ import Command from "../types/interfaces/command.interface";
 const simulation = Router();
 
 simulation.get("/", (req: Request, res: Response) => {
-    res.status(200);
+    res.status(200).json({ msg: "communication is working" });
 });
 
 simulation.post("/import", validateReqBody, (req: Request, res: Response) => {
@@ -17,6 +17,7 @@ simulation.post("/import", validateReqBody, (req: Request, res: Response) => {
         return;
     }
 
+    console.log("recieved input data");
     input.commands.forEach((c: Command) => importedSteps.push(c));
 
     res.status(200).json({ msg: "Successfully imported data." });
