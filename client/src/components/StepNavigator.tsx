@@ -9,7 +9,7 @@ interface IStepNav {
 
 const StepNavigator = ({ step, handleNextStep, handlePreviousStep }: IStepNav) => {
     return (
-        <div className="flex w-full h-full items-center flex-col">
+        <div className="flex w-full items-center flex-col">
             <p>
                 Step: <span className="text-primary">{step as React.ReactNode}</span>
             </p>

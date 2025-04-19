@@ -96,7 +96,7 @@ const App = () => {
                             Simulate
                         </HUIButton>
 
-                        <div className="flex flex-col gap-8 w-full h-full justify-center items-center">
+                        <div className="flex flex-col gap-8 w-full h-full justify-start">
                             <StepNavigator
                                 step={step}
                                 handleNextStep={handleNextStep}
