@@ -1,5 +1,5 @@
-import LeftArrow from "../assets/arrow/LeftArrow";
-import StraightRightArrow from "../assets/arrow/StraightRightArrow";
+import LeftArrow from "../assets/LeftArrow";
+import StraightRightArrow from "../assets/StraightRightArrow";
 import { iRoad } from "../types/interfaces/environment.interface";
 import decodeColor from "../utils/decodeColor";
 
