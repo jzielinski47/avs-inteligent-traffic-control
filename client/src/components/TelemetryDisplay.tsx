@@ -12,10 +12,10 @@ export const TelemetryDisplay = ({ telemetry }: { telemetry: Telemetry }) => {
             </Field>
             {telemetry?.command.type === "step" && (
                 <>
-                    <Field className="w-full h-full">
+                    <Field className="w-full">
                         <Label className="text-sm/6 font-medium text-white">Before</Label>
 
-                        <div className="grid grid-cols-4 w-full">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 w-full">
                             {telemetry?.before ? (
                                 <>
                                     <DirectionComponent name="North" direction={telemetry?.before?.north} />
@@ -26,9 +26,9 @@ export const TelemetryDisplay = ({ telemetry }: { telemetry: Telemetry }) => {
                             ) : null}
                         </div>
                     </Field>
-                    <Field className="w-full h-full">
+                    <Field className="w-full">
                         <Label className="text-sm/6 font-medium text-white">Runtime</Label>
-                        <div className="grid grid-cols-4 w-full">
+                        <div className="grid grid-cols-2 lg:grid-cols-4  w-full">
                             {telemetry?.runtime ? (
                                 <>
                                     <DirectionComponent name="North" direction={telemetry?.runtime?.north} />
@@ -49,9 +49,9 @@ export const TelemetryDisplay = ({ telemetry }: { telemetry: Telemetry }) => {
                             readOnly
                         />
                     </Field>
-                    <Field className="w-full h-full">
+                    <Field className="w-full">
                         <Label className="text-sm/6 font-medium text-white">After</Label>
-                        <div className="grid grid-cols-4 w-full">
+                        <div className="grid grid-cols-2 lg:grid-cols-4  w-full">
                             {telemetry?.after ? (
                                 <>
                                     <DirectionComponent name="North" direction={telemetry?.after?.north} />

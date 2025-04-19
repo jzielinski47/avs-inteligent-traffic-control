@@ -7,7 +7,7 @@ const SliderTracker = ({ step, maxSteps }: { step: number; maxSteps: number }) =
                     value={step}
                     min={0}
                     max={maxSteps}
-                    className="w-full h-2 rounded-lg text-primary appearance-none cursor-pointer bg-level-1 [hover]:opacity-1"
+                    className="my-5 w-full h-2 rounded-lg text-primary appearance-none cursor-pointer bg-level-1 [hover]:opacity-1"
                 />
             </div>
         </div>

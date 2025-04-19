@@ -77,9 +77,9 @@ const App = () => {
     }, [output, step]);
 
     return (
-        <div className="app flex p-4 items-center w-full h-full flex-col p-4">
+        <div className="app min-h-screen flex-grow flex p-4 items-center w-full h-full flex-col">
             <Header />
-            <div className="w-full h-full grid grid-cols-3 gap-4 mt-2 mb-4">
+            <div className="w-full min-full flex-grow grid grid-cols-1 2xl:grid-cols-3 gap-4 mt-2 mb-4 p-4">
                 <InputPanel
                     inputData={inputData as Command[]}
                     readInputFile={readInputFile}
@@ -108,6 +108,7 @@ const App = () => {
                 </PanelWrapper>
                 <OutputPanel output={output as Output} />
             </div>
+
             <SliderTracker step={step} maxSteps={maxSteps} />
         </div>
     );
