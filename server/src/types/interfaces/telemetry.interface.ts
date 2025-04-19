@@ -9,6 +9,7 @@ interface Telemetry {
     before?: Environment;
     runtime?: Environment;
     after?: Environment;
+    leftVehicles?: string[];
 }
 
 export default Telemetry;

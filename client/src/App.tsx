@@ -15,7 +15,6 @@ const App = () => {
     const [step, setStep] = useState<number>(0);
     const [maxSteps, setMaxSteps] = useState<number>(5);
     const [inputData, setInputData] = useState<Command[]>();
-    const [isSimulated, setIsSimulated] = useState<boolean>(false);
     const [logMessage, setLogMessage] = useState<string>("");
     const [output, setOutput] = useState<Output>();
     const [telemetry, setTelemetry] = useState<Telemetry>();
@@ -57,7 +56,6 @@ const App = () => {
 
     useEffect(() => {
         if (inputData) {
-            setIsSimulated(true);
         }
     }, [inputData]);
 
@@ -116,12 +114,8 @@ const App = () => {
                                     Step: <span className="text-primary">{step as React.ReactNode}</span>
                                 </p>
                                 <div className="flex flex-row gap-2">
-                                    <HUIButton disabled={!isSimulated} action={handlePreviousStep}>
-                                        Previous step
-                                    </HUIButton>
-                                    <HUIButton disabled={!isSimulated} action={handleNextStep}>
-                                        Next step
-                                    </HUIButton>
+                                    <HUIButton action={handlePreviousStep}>Previous step</HUIButton>
+                                    <HUIButton action={handleNextStep}>Next step</HUIButton>
                                 </div>
                             </div>
                             <Field className="w-full h-full">
@@ -181,6 +175,15 @@ const App = () => {
                                                 </>
                                             ) : null}
                                         </div>
+                                        <Textarea
+                                            className={
+                                                "mt-6 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white" +
+                                                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                                            }
+                                            rows={6}
+                                            name="inputDisplay"
+                                            value={"vehicles that left the intersection: \n" + telemetry?.leftVehicles}
+                                        />
                                     </Field>
                                     <Field className="w-full h-full">
                                         <Label className="text-sm/6 font-medium text-white">After</Label>

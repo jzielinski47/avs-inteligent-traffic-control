@@ -22,7 +22,7 @@ const processSteps = (steps: Command[]): Output => {
             east: east.queue.length,
             west: west.queue.length,
         };
-        const tempTelemetry: Telemetry = { id: index, command: step, stats: queueLengths };
+        const tempTelemetry: Telemetry = { id: index, command: step, stats: queueLengths, leftVehicles: [] };
 
         switch (command) {
             case Commands.ADDVEHICLE:
@@ -74,13 +74,13 @@ const processSteps = (steps: Command[]): Output => {
 
                 console.log(index, environment);
                 tempTelemetry.runtime = JSON.parse(JSON.stringify(environment));
-
+                leftVehicles.forEach((v) => tempTelemetry.leftVehicles?.push(v));
                 output.stepStatuses.push({ leftVehicles });
 
                 // Updates lights: all GREEN -> YELLOW;
                 updateTrafficLightsCycle();
                 tempTelemetry.after = JSON.parse(JSON.stringify(environment));
-                console.log(environment, "333333");
+                console.log(environment);
 
                 break;
             default:
