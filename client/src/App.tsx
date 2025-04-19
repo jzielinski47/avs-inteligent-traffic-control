@@ -5,9 +5,33 @@ import Header from "./components/Header";
 import HUIButton from "./components/HUIButton";
 import InputFile from "./components/InputFile";
 import PanelWrapper from "./components/PanelWrapper";
+import Command from "./types/interfaces/command.interface";
 
 const App = () => {
     const [step, setStep] = useState<Number>(0);
+    const [file, setFile] = useState<File | undefined>();
+    const [inputData, setInputData] = useState<Command[]>();
+
+    const readInputFile = (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const target = e.target as HTMLInputElement & { files: FileList };
+        if (target.files[0].type !== "application/json") return;
+        setFile(target.files[0]);
+
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            try {
+                const json = JSON.parse(event.target?.result as string);
+                setInputData(json);
+                console.log("Parsed JSON:", json);
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+            }
+        };
+
+        reader.readAsText(target.files[0]);
+    };
 
     return (
         <div className="app flex p-4 items-center w-full h-full flex-col p-4">
@@ -17,7 +41,7 @@ const App = () => {
                     <InputFile
                         label={"Upload insert.json"}
                         description="You can either upload it here or enter the relevant json in the textfield below."
-                        action={() => {}}
+                        action={readInputFile}
                     />
                     <Textarea
                         className={
@@ -26,6 +50,7 @@ const App = () => {
                         }
                         rows={28}
                         name="inputDisplay"
+                        value={JSON.stringify(inputData, null, 2)}
                     />
                 </PanelWrapper>
                 <PanelWrapper>
