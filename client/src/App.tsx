@@ -181,8 +181,9 @@ const App = () => {
                                                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
                                             }
                                             rows={6}
-                                            name="inputDisplay"
+                                            name="leftVehicles"
                                             value={"vehicles that left the intersection: \n" + telemetry?.leftVehicles}
+                                            readOnly
                                         />
                                     </Field>
                                     <Field className="w-full h-full">
