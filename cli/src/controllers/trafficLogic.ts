@@ -30,14 +30,12 @@ export const updateTrafficLightsCycle = () => {
         const state = environment[dir];
         if (state.priorityLeftSignalLight == Lights.GREEN) {
             state.priorityLeftSignalLight = Lights.YELLOW;
+        } else if (state.priorityLeftSignalLight == Lights.YELLOW) {
+            state.priorityLeftSignalLight = Lights.RED;
         }
         if (state.straightRightSignalLight == Lights.GREEN) {
             state.straightRightSignalLight = Lights.YELLOW;
-        }
-        if (state.priorityLeftSignalLight == Lights.YELLOW) {
-            state.priorityLeftSignalLight = Lights.RED;
-        }
-        if (state.straightRightSignalLight == Lights.YELLOW) {
+        } else if (state.straightRightSignalLight == Lights.YELLOW) {
             state.straightRightSignalLight = Lights.RED;
         }
     }
