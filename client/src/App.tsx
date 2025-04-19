@@ -1,5 +1,5 @@
 import { Field, Label, Textarea } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import HUIButton from "./components/HUIButton";
@@ -8,15 +8,15 @@ import PanelWrapper from "./components/PanelWrapper";
 import Command from "./types/interfaces/command.interface";
 
 const App = () => {
-    const [step, setStep] = useState<Number>(0);
-    const [file, setFile] = useState<File | undefined>();
+    const [step, setStep] = useState<number>(0);
+    const [maxSteps, setMaxSteps] = useState<number>(12);
     const [inputData, setInputData] = useState<Command[]>();
+    const [isActiveSimBut, setIsActiveSimBut] = useState<boolean>(false);
 
     const readInputFile = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
         const target = e.target as HTMLInputElement & { files: FileList };
         if (target.files[0].type !== "application/json") return;
-        setFile(target.files[0]);
 
         const reader = new FileReader();
 
@@ -25,6 +25,7 @@ const App = () => {
                 const json = JSON.parse(event.target?.result as string);
                 setInputData(json);
                 console.log("Parsed JSON:", json);
+                setMaxSteps(json?.commands.length);
             } catch (error) {
                 console.error("Error parsing JSON:", error);
             }
@@ -32,6 +33,10 @@ const App = () => {
 
         reader.readAsText(target.files[0]);
     };
+
+    useEffect(() => {
+        if (inputData) setIsActiveSimBut(true);
+    }, [inputData]);
 
     return (
         <div className="app flex p-4 items-center w-full h-full flex-col p-4">
@@ -55,11 +60,19 @@ const App = () => {
                 </PanelWrapper>
                 <PanelWrapper>
                     <div className="flex flex-col gap-4 w-full h-full justify-center items-center">
-                        <div className="flex flex-col gap-2 w-full h-full justify-center items-center">
+                        <div className="flex flex-col gap-0 w-full h-full justify-center items-center">
                             <HUIButton>Simulate</HUIButton>
-                            <HUIButton>Next step</HUIButton>
                         </div>
                         <div className="flex flex-col gap-8 w-full h-full justify-center items-center">
+                            <div className="flex w-full h-full items-center flex-col">
+                                <p>
+                                    Step: <span className="text-primary">{step as React.ReactNode}</span>
+                                </p>
+                                <div className="flex flex-row gap-2">
+                                    <HUIButton>Previous step</HUIButton>
+                                    <HUIButton>Next step</HUIButton>
+                                </div>
+                            </div>
                             <Field className="w-full h-full">
                                 <Label>Before</Label>
                                 <Textarea
@@ -113,9 +126,11 @@ const App = () => {
             <div className="w-full h-32">
                 <div className="slidecontainer">
                     <input
-                        id="default-range"
                         type="range"
-                        className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-[#1e1e1e]"
+                        value={step}
+                        min={0}
+                        max={maxSteps}
+                        className="w-full h-2 rounded-lg text-primary appearance-none cursor-pointer bg-level-1 [hover]:opacity-1"
                     />
                 </div>
             </div>
