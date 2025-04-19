@@ -3,6 +3,7 @@ import validateReqBody from "../middlewares/validateReqBody";
 import { importedSteps, output, telemetry } from "../models/model";
 import runSimulation from "../controllers/simulationController";
 import Command from "../types/interfaces/command.interface";
+import hardEnvironmentReset from "../controllers/hardEnvironmentReset";
 
 const simulation = Router();
 
@@ -11,6 +12,8 @@ simulation.get("/", (req: Request, res: Response) => {
 });
 
 simulation.post("/import", validateReqBody, (req: Request, res: Response) => {
+    hardEnvironmentReset();
+
     const input = req.body;
     if (!Array.isArray(input?.commands)) {
         res.status(400).json({ msg: "Invalid format: 'commands' must be an array." });
@@ -24,6 +27,7 @@ simulation.post("/import", validateReqBody, (req: Request, res: Response) => {
 });
 
 simulation.post("/simulate", (req: Request, res: Response) => {
+    console.log("run simulation");
     if (!importedSteps) {
         res.status(400).json({ msg: "Import the commands first via /api/sim/import endpoint" });
         return;

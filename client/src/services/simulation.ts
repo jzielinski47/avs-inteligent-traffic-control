@@ -35,3 +35,53 @@ export const importData = async (data: Command[]) => {
         throw new Error(err.message);
     }
 };
+
+export const runSimulation = async () => {
+    try {
+        const request: RequestInit = {
+            ...POSTRequest,
+        };
+        console.log("sending data to " + `${serverIP}/api/sim/simulate`);
+        const res = await fetch(`${serverIP}/api/sim/simulate`, request);
+        if (res.ok) {
+            console.log("ok");
+            return res.json();
+        } else {
+            const err = await res.json();
+            console.error(err);
+            if (err.details) {
+                err.details.forEach((error: any) => console.error(error.msg));
+                throw new Error(err.details[0].msg);
+            } else {
+                throw new Error(err.error);
+            }
+        }
+    } catch (err: any) {
+        throw new Error(err.message);
+    }
+};
+
+export const getStep = async (i: number) => {
+    try {
+        const request: RequestInit = {
+            method: "GET",
+        };
+        console.log("sending data to " + `${serverIP}/api/sim/stat/${i}`);
+        const res = await fetch(`${serverIP}/api/sim/stat/${i}`, request);
+        if (res.ok) {
+            console.log("ok");
+            return res.json();
+        } else {
+            const err = await res.json();
+            console.error(err);
+            if (err.details) {
+                err.details.forEach((error: any) => console.error(error.msg));
+                throw new Error(err.details[0].msg);
+            } else {
+                throw new Error(err.error);
+            }
+        }
+    } catch (err: any) {
+        throw new Error(err.message);
+    }
+};

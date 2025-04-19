@@ -1,4 +1,4 @@
-import { Field, Label, Textarea } from "@headlessui/react";
+import { Description, Field, Label, Textarea } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
@@ -6,13 +6,19 @@ import HUIButton from "./components/HUIButton";
 import InputFile from "./components/InputFile";
 import PanelWrapper from "./components/PanelWrapper";
 import Command from "./types/interfaces/command.interface";
-import { importData } from "./services/simulation";
+import { getStep, importData, runSimulation } from "./services/simulation";
+import Output from "./types/interfaces/output.interface";
+import { Environment } from "vite";
+import Telemetry from "./types/interfaces/telemetry.interface";
 
 const App = () => {
     const [step, setStep] = useState<number>(0);
     const [maxSteps, setMaxSteps] = useState<number>(5);
     const [inputData, setInputData] = useState<Command[]>();
     const [isSimulated, setIsSimulated] = useState<boolean>(false);
+    const [logMessage, setLogMessage] = useState<string>("");
+    const [output, setOutput] = useState<Output>();
+    const [telemetry, setTelemetry] = useState<Telemetry>();
 
     const readInputFile = async (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -40,8 +46,13 @@ const App = () => {
     };
 
     const handleDataImport = async () => {
-        await importData(inputData as Command[]);
-        console.log("sending");
+        const json: { msg: string } = await importData(inputData as Command[]);
+        if (json.msg) setLogMessage(json.msg);
+    };
+
+    const handleSimulationButton = async () => {
+        const json = await runSimulation();
+        setOutput(json?.stepStatuses);
     };
 
     useEffect(() => {
@@ -57,6 +68,15 @@ const App = () => {
     const handlePreviousStep = () => {
         if (step > 0) setStep(step - 1);
     };
+
+    useEffect(() => {
+        const fetchStep = async () => {
+            const json = await getStep(step);
+            setTelemetry(json);
+        };
+
+        fetchStep();
+    }, [output, step]);
 
     return (
         <div className="app flex p-4 items-center w-full h-full flex-col p-4">
@@ -79,11 +99,15 @@ const App = () => {
                         value={JSON.stringify(inputData, null, 2)}
                         onChange={handleInputChange}
                     />
+                    <p className="text-sm/6 text-white/50">
+                        Make sure you click the <b>Upload</b> button to send upload the data
+                    </p>
+                    <p className="text-sm/6 text-[#0f0]/50">{logMessage}</p>
                 </PanelWrapper>
                 <PanelWrapper>
                     <div className="flex flex-col gap-4 w-full h-full justify-center items-center">
                         <div className="flex flex-col gap-0 w-full h-full justify-center items-center">
-                            <HUIButton>Simulate</HUIButton>
+                            <HUIButton action={handleSimulationButton}>Simulate</HUIButton>
                         </div>
                         <div className="flex flex-col gap-8 w-full h-full justify-center items-center">
                             <div className="flex w-full h-full items-center flex-col">
@@ -100,6 +124,10 @@ const App = () => {
                                 </div>
                             </div>
                             <Field className="w-full h-full">
+                                <Label>Stats</Label>
+                                <p>{JSON.stringify(telemetry?.stats, null, 2)}</p>
+                            </Field>
+                            <Field className="w-full h-full">
                                 <Label>Before</Label>
                                 <Textarea
                                     className={
@@ -108,6 +136,8 @@ const App = () => {
                                     }
                                     rows={8}
                                     name="inputDisplay"
+                                    readOnly
+                                    value={JSON.stringify(telemetry?.before, null, 2)}
                                 />
                             </Field>
                             <Field className="w-full h-full">
@@ -119,6 +149,8 @@ const App = () => {
                                     }
                                     rows={8}
                                     name="inputDisplay"
+                                    readOnly
+                                    value={JSON.stringify(telemetry?.runtime, null, 2)}
                                 />
                             </Field>
                             <Field className="w-full h-full">
@@ -130,6 +162,8 @@ const App = () => {
                                     }
                                     rows={8}
                                     name="inputDisplay"
+                                    readOnly
+                                    value={JSON.stringify(telemetry?.after, null, 2)}
                                 />
                             </Field>
                         </div>
@@ -144,7 +178,9 @@ const App = () => {
                                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
                             }
                             rows={25}
+                            value={JSON.stringify(output, null, 2)}
                             name="inputDisplay"
+                            readOnly
                         />
                     </div>
                 </PanelWrapper>
