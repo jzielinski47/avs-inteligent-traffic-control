@@ -1,15 +1,15 @@
-import { Description, Field, Label, Textarea } from "@headlessui/react";
+import { Field, Label, Textarea } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import HUIButton from "./components/HUIButton";
 import InputFile from "./components/InputFile";
 import PanelWrapper from "./components/PanelWrapper";
-import Command from "./types/interfaces/command.interface";
 import { getStep, importData, runSimulation } from "./services/simulation";
+import Command from "./types/interfaces/command.interface";
 import Output from "./types/interfaces/output.interface";
-import { Environment } from "vite";
 import Telemetry from "./types/interfaces/telemetry.interface";
+import DirectionComponent from "./components/DirectionComponent";
 
 const App = () => {
     const [step, setStep] = useState<number>(0);
@@ -32,7 +32,7 @@ const App = () => {
                 const json = JSON.parse(event.target?.result as string);
                 setInputData(json);
                 console.log("Parsed JSON:", json);
-                setMaxSteps(json?.commands.length);
+                setMaxSteps(json?.commands.length - 1);
             } catch (error) {
                 console.error("Error parsing JSON:", error);
             }
@@ -73,6 +73,7 @@ const App = () => {
         const fetchStep = async () => {
             const json = await getStep(step);
             setTelemetry(json);
+            console.log(json);
         };
 
         fetchStep();
@@ -124,48 +125,90 @@ const App = () => {
                                 </div>
                             </div>
                             <Field className="w-full h-full">
-                                <Label>Stats</Label>
-                                <p>{JSON.stringify(telemetry?.stats, null, 2)}</p>
+                                <Label className="text-sm/6 font-medium text-white">Stats</Label>
+                                <p>Command: {telemetry?.command?.type}</p>
+                                <p>Queue lenghts before: {JSON.stringify(telemetry?.stats, null, 2)}</p>
                             </Field>
-                            <Field className="w-full h-full">
-                                <Label>Before</Label>
-                                <Textarea
-                                    className={
-                                        "mt-2 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white" +
-                                        "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-                                    }
-                                    rows={8}
-                                    name="inputDisplay"
-                                    readOnly
-                                    value={JSON.stringify(telemetry?.before, null, 2)}
-                                />
-                            </Field>
-                            <Field className="w-full h-full">
-                                <Label>Runtime</Label>
-                                <Textarea
-                                    className={
-                                        "mt-2 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white" +
-                                        "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-                                    }
-                                    rows={8}
-                                    name="inputDisplay"
-                                    readOnly
-                                    value={JSON.stringify(telemetry?.runtime, null, 2)}
-                                />
-                            </Field>
-                            <Field className="w-full h-full">
-                                <Label>After</Label>
-                                <Textarea
-                                    className={
-                                        "mt-2 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white" +
-                                        "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-                                    }
-                                    rows={8}
-                                    name="inputDisplay"
-                                    readOnly
-                                    value={JSON.stringify(telemetry?.after, null, 2)}
-                                />
-                            </Field>
+                            {telemetry?.command.type === "step" && (
+                                <>
+                                    <Field className="w-full h-full">
+                                        <Label className="text-sm/6 font-medium text-white">Before</Label>
+
+                                        <div className="grid grid-cols-4 w-full">
+                                            {telemetry?.before ? (
+                                                <>
+                                                    <DirectionComponent
+                                                        name="North"
+                                                        direction={telemetry?.before?.north}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="East"
+                                                        direction={telemetry?.before?.east}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="South"
+                                                        direction={telemetry?.before?.south}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="West"
+                                                        direction={telemetry?.before?.west}
+                                                    />
+                                                </>
+                                            ) : null}
+                                        </div>
+                                    </Field>
+                                    <Field className="w-full h-full">
+                                        <Label className="text-sm/6 font-medium text-white">Runtime</Label>
+                                        <div className="grid grid-cols-4 w-full">
+                                            {telemetry?.runtime ? (
+                                                <>
+                                                    <DirectionComponent
+                                                        name="North"
+                                                        direction={telemetry?.runtime?.north}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="East"
+                                                        direction={telemetry?.runtime?.east}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="South"
+                                                        direction={telemetry?.runtime?.south}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="West"
+                                                        direction={telemetry?.runtime?.west}
+                                                    />
+                                                </>
+                                            ) : null}
+                                        </div>
+                                    </Field>
+                                    <Field className="w-full h-full">
+                                        <Label className="text-sm/6 font-medium text-white">After</Label>
+                                        <div className="grid grid-cols-4 w-full">
+                                            {telemetry?.after ? (
+                                                <>
+                                                    <DirectionComponent
+                                                        name="North"
+                                                        direction={telemetry?.after?.north}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="East"
+                                                        direction={telemetry?.after?.east}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="South"
+                                                        direction={telemetry?.after?.south}
+                                                    />
+                                                    <DirectionComponent
+                                                        name="West"
+                                                        direction={telemetry?.after?.west}
+                                                    />
+                                                </>
+                                            ) : null}
+                                        </div>
+                                    </Field>
+                                </>
+                            )}
                         </div>
                     </div>
                 </PanelWrapper>

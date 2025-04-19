@@ -9,6 +9,10 @@
     --color-level-3: #222222;
     --color-level-4: #2c2c2c;
     --color-level-5: #323232;
+
+    --color-green: #0f0;
+    --color-yellow: #0ff;
+    --color-red: #f00;
 }
 
 :root {
