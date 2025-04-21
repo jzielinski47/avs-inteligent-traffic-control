@@ -44,21 +44,6 @@ simulation.get("/stat/:id", (req: Request, res: Response) => {
     return;
 });
 
-simulation.get("/next", validateReqBody, (req: Request, res: Response) => {
-    let index: number = req.body?.stepIndex;
-    if (typeof index !== "number") {
-        res.status(400).json({ msg: "Invalid step index" });
-        return;
-    }
-
-    const nextIndex = index++;
-
-    importedSteps[nextIndex] != undefined
-        ? res.status(200).json(importedSteps[nextIndex])
-        : res.status(400).json({ msg: "unable to resolve the next step" });
-    return;
-});
-
 simulation.get("/output", (req: Request, res: Response) => {
     output != undefined && importedSteps != undefined
         ? res.status(200).json(output)
