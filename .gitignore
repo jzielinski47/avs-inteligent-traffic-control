@@ -147,3 +147,5 @@ dist
 node_modules/
 dist/
 output.json
+out.json
+out*.json
