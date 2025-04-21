@@ -12,6 +12,7 @@ import Output from "./types/interfaces/output.interface";
 import Telemetry from "./types/interfaces/telemetry.interface";
 import OutputPanel from "./components/OutputPanel";
 import SliderTracker from "./components/SliderTracker";
+import LogMessage from "./components/LogMessage";
 
 const App = () => {
     const [step, setStep] = useState<number>(0);
@@ -20,7 +21,9 @@ const App = () => {
     const [logMessage, setLogMessage] = useState<string>("");
     const [output, setOutput] = useState<Output>();
     const [telemetry, setTelemetry] = useState<Telemetry>();
+    const [isUploaded, setIsUploaded] = useState<boolean>(false);
     const [canSimulate, setCanSimulate] = useState<boolean>(false);
+    const [isSimulated, setIsSimulated] = useState<boolean>(false);
 
     const readInputFile = async (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -47,11 +50,13 @@ const App = () => {
     const handleDataImport = async () => {
         const json: { msg: string } = await importData(inputData as Command[]);
         if (json.msg) setLogMessage(json.msg);
+        setIsUploaded(true);
     };
 
     const handleSimulationButton = async () => {
         const json = await runSimulation();
         setOutput(json?.stepStatuses);
+        setIsSimulated(true);
     };
 
     useEffect(() => {
@@ -86,6 +91,7 @@ const App = () => {
                     handleDataImport={handleDataImport}
                     logMessage={logMessage}
                     canSimulate={canSimulate}
+                    isSimulated={isSimulated}
                 />
                 <PanelWrapper>
                     <div className="flex flex-col gap-4 w-full h-full justify-center items-center">
@@ -95,6 +101,11 @@ const App = () => {
                         >
                             Simulate
                         </HUIButton>
+                        {isUploaded && canSimulate && !isSimulated ? (
+                            <LogMessage>
+                                Click <b>Simulate</b> button to run the simulation
+                            </LogMessage>
+                        ) : null}
 
                         <div className="flex flex-col gap-8 w-full h-full justify-start">
                             <StepNavigator
@@ -102,7 +113,7 @@ const App = () => {
                                 handleNextStep={handleNextStep}
                                 handlePreviousStep={handlePreviousStep}
                             />
-                            <TelemetryDisplay telemetry={telemetry as Telemetry} />
+                            {isUploaded && isSimulated ? <TelemetryDisplay telemetry={telemetry as Telemetry} /> : null}
                         </div>
                     </div>
                 </PanelWrapper>

@@ -2,6 +2,7 @@ import { Textarea } from "@headlessui/react";
 import InputFile from "./InputFile";
 import PanelWrapper from "./PanelWrapper";
 import Command from "../types/interfaces/command.interface";
+import LogMessage from "./LogMessage";
 
 interface IInputPanel {
     inputData: Command[];
@@ -9,9 +10,19 @@ interface IInputPanel {
     handleDataImport: () => void;
     logMessage: string;
     canSimulate?: boolean;
+    isUploaded?: boolean;
+    isSimulated?: boolean;
 }
 
-const InputPanel = ({ inputData, readInputFile, handleDataImport, logMessage, canSimulate }: IInputPanel) => {
+const InputPanel = ({
+    inputData,
+    readInputFile,
+    handleDataImport,
+    logMessage,
+    canSimulate,
+    isUploaded,
+    isSimulated,
+}: IInputPanel) => {
     return (
         <PanelWrapper>
             <InputFile
@@ -21,6 +32,11 @@ const InputPanel = ({ inputData, readInputFile, handleDataImport, logMessage, ca
                 action2={handleDataImport}
                 canSim={canSimulate}
             />
+            {inputData && !isUploaded && !isSimulated ? (
+                <LogMessage>
+                    Make sure you click the <b>Upload</b> button to send upload the data after the import
+                </LogMessage>
+            ) : null}
             <Textarea
                 className={
                     "mt-6 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white" +
