@@ -1,7 +1,6 @@
 import { directionNames, environment } from "../config/config";
 import { Lights } from "../types/enums/light.enum";
 import { Manoeuvres } from "../types/enums/manoeuvres.enum";
-import { Vehicle } from "../types/interfaces/vehicle.interface";
 
 export const handleVehicleMovement = (leftVehicles: string[]) => {
     for (const dir of directionNames) {
@@ -14,7 +13,7 @@ export const handleVehicleMovement = (leftVehicles: string[]) => {
 
         if (state.queue[0].isEmergencyVehicle || isGreenLight) {
             leftVehicles.push(state.queue[0].vehicleId);
-            console.log(state.queue[0].vehicleId + "'s leaving the intersection!");
+            console.log(state.queue[0].vehicleId + " is leaving the intersection!");
             state.queue.shift();
         }
     }

@@ -4,6 +4,8 @@ import { Manoeuvres } from "../types/enums/manoeuvres.enum";
 import { Environment } from "../types/interfaces/environment.interface";
 import Output from "../types/interfaces/output.interface";
 
+export const isDebug: boolean = process.argv[4] === "debug" ? true : false;
+
 const defaultLightSignal: Lights = Lights.RED;
 
 export const environment: Environment = {

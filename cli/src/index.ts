@@ -1,4 +1,3 @@
-import { output } from "./config/config";
 import processSteps from "./services/processSteps";
 import validateJson from "./utils/validateJson";
 import writeToFile from "./utils/writeToFile";

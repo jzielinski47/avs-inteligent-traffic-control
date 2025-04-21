@@ -1,19 +1,18 @@
-import { environment, output, directionNames } from "../config/config";
-import { updateTrafficLightsCycle } from "../controllers/trafficLogic";
+import { directionNames, environment, isDebug, output } from "../config/config";
 import { trafficController as runTrafficController } from "../controllers/trafficController";
+import { updateTrafficLightsCycle } from "../controllers/trafficLogic";
 import { Commands } from "../types/enums/command.enum";
 import { Command } from "../types/interfaces/command.interface";
+import Output from "../types/interfaces/output.interface";
 import { Vehicle } from "../types/interfaces/vehicle.interface";
 import { Road } from "../types/road.type";
 import assignManoeuvre from "../utils/assignManoeuvre";
 import { handleVehicleMovement } from "./handleVehicleMovement";
-import Output from "../types/interfaces/output.interface";
-import { getPriorityVehicle } from "../utils/assignPriority";
 
 const processSteps = (steps: Command[]): Output => {
     steps.forEach((step: Command, index: number) => {
         const command: Commands | string = step.type;
-        console.log(index, command, environment);
+        if (isDebug) console.log(index, command, environment);
         switch (command) {
             case Commands.ADDVEHICLE:
                 const { vehicleId, startRoad, endRoad } = step;
@@ -33,11 +32,10 @@ const processSteps = (steps: Command[]): Output => {
 
                 break;
             case Commands.STEP:
-               
                 updateTrafficLightsCycle();
 
                 const leftVehicles: string[] = [];
-                
+
                 runTrafficController();
 
                 console.log(`Step ${index}: queue lengths`, {
@@ -46,10 +44,10 @@ const processSteps = (steps: Command[]): Output => {
                     east: environment.east.queue.length,
                     west: environment.west.queue.length,
                 });
-                
+
                 handleVehicleMovement(leftVehicles);
 
-                console.log(index, environment);
+                if (isDebug) console.log(index, environment);
 
                 output.stepStatuses.push({ leftVehicles });
 
