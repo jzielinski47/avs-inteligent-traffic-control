@@ -20,19 +20,27 @@ simulation.post("/import", validateReqBody, (req: Request, res: Response) => {
         return;
     }
 
-    console.log("recieved input data");
+    console.log("received input data");
     input.commands.forEach((c: Command) => importedSteps.push(c));
 
     res.status(200).json({ msg: "Successfully imported data." });
 });
 
 simulation.post("/simulate", (req: Request, res: Response) => {
-    console.log("run simulation");
-    if (!importedSteps) {
-        res.status(400).json({ msg: "Import the commands first via /api/sim/import endpoint" });
+    console.log("running simulation");
+    try {
+        if (!Array.isArray(importedSteps) || importedSteps.length === 0) {
+            res.status(400).json({ msg: "Import the commands first via /api/sim/import endpoint" });
+            return;
+        }
+        const result = runSimulation(importedSteps);
+        res.status(200).json(result);
+        return;
+    } catch (err) {
+        console.error("Simulation error:", err);
+        res.status(500).json({ msg: "Internal server error during simulation." });
         return;
     }
-    res.status(200).json(runSimulation(importedSteps));
 });
 
 simulation.get("/stat/:id", (req: Request, res: Response) => {
@@ -40,7 +48,7 @@ simulation.get("/stat/:id", (req: Request, res: Response) => {
 
     telemetry[id] != undefined
         ? res.status(200).json(telemetry[id])
-        : res.status(400).json({ msg: "unable to resolve the next step" });
+        : res.status(400).json({ msg: "No telemetry data found for this ID." });
     return;
 });
 
