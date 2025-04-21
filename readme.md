@@ -200,7 +200,34 @@ Example stage before arbitration:
 }
 ```
 
-At this stage, the Traffic Control System assigned priority to vehicle1 which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See Scenario 1.
+At this stage, the Traffic Control System assigned priority to `vehicle1` which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See [Scenario 1](https://github.com/jzielinski47/avs-inteligent-traffic-control?tab=readme-ov-file#traffic-control-algorithm).
+
+Example stage after arbitration:
+```json
+{
+    "north": {
+      "priorityLeftSignalLight": "green",
+      "straightRightSignalLight": "red",
+      "queue": [ [Object] ]
+    },
+    "east": {
+      "priorityLeftSignalLight": "red",
+      "straightRightSignalLight": "red",
+      "queue": []
+    },
+    "south": {
+      "priorityLeftSignalLight": "green",
+      "straightRightSignalLight": "red",
+      "queue": [ [Object] ]
+    },
+    "west": {
+      "priorityLeftSignalLight": "red",
+      "straightRightSignalLight": "red",
+      "queue": []
+    }
+  }
+```
+
 
 Two individual instances of vehicle (vehicle1, vehicle2) leave the corssroad simultaniously as the signal for their manouevre is green.
 
@@ -211,31 +238,31 @@ vehicle1 leaves the crossroad!
 vehicle2 leaves the crossroad!
 ```
 
-Example stage after arbitration:
+Example stage after evaluation of movement:
 
 ```json
 {
     "north": {
-        "priorityLeftSignalLight": "green",
-        "straightRightSignalLight": "red",
-        "queue": []
+      "priorityLeftSignalLight": "yellow",
+      "straightRightSignalLight": "red",
+      "queue": []
     },
     "east": {
-        "priorityLeftSignalLight": "green",
-        "straightRightSignalLight": "red",
-        "queue": []
+      "priorityLeftSignalLight": "red",
+      "straightRightSignalLight": "red",
+      "queue": []
     },
     "south": {
-        "priorityLeftSignalLight": "green",
-        "straightRightSignalLight": "red",
-        "queue": []
+      "priorityLeftSignalLight": "yellow",
+      "straightRightSignalLight": "red",
+      "queue": []
     },
     "west": {
-        "priorityLeftSignalLight": "green",
-        "straightRightSignalLight": "red",
-        "queue": []
+      "priorityLeftSignalLight": "red",
+      "straightRightSignalLight": "red",
+      "queue": []
     }
-}
+  }
 ```
 
 Output JSON:
@@ -281,7 +308,7 @@ How to use it correctly:
 4. Now you can track every step and what's happening under the hood.
 
 ## REST API backend
-The simulation wouldn't be possible without the well-structured backend. The following endpoints handle all necessary operations to manage and simulate traffic flow effectively.
+The GUI simulation wouldn't be possible without the well-structured backend. The following endpoints handle all necessary operations to manage and simulate traffic flow effectively.
 
 #### Check communication
 ```http
@@ -295,14 +322,14 @@ POST /api/sim/import
 ```
 Clears the existing data in temporary memory and expects a valid JSON in the request body.  
 The uploaded steps are stored in memory and will be referenced by all further simulation endpoints.  
-*In a production environment, this data should be stored in a database and linked to the user's sessionID.*
+**In a production environment, this data should be stored in a database and linked to the user's sessionID.*
 
 #### Simulate the traffic scenario
 ```http
 POST /api/sim/simulate
 ```
 Triggers the traffic simulation using the data stored in temporary memory.  
-Returns a JSON object containing the full simulation output. *However, there's also another endpoint to resolve the same data later. *
+Returns a JSON object containing the full simulation output. **However, there's also another endpoint to retrieve the same data later.*
 
 #### Resolve telemetry data for each step
 ```http
