@@ -1,7 +1,5 @@
 # AVS intelligent traffic control system
 
-## Overview
-
 ## Setup
 
 ### Standard task: Command Line Interface
@@ -16,8 +14,8 @@ npm run demo input.json output.json
 ```
 > Replace `input.json` and `output.json` with the actual file paths you want to use.
 
-### Fullstack application setup
-I've also prepared a full-stack application consisting of a REST API server and frontend to better visualize and track the traffic control system.
+### Fullstack web application setup
+I've also prepared a full-stack application consisting of a REST API server and the frontend GUI to better visualize and track the traffic control system.
 
 To run the server
 1. Navigate to the `server` folder:
@@ -34,8 +32,10 @@ cd client
 npm run demo
 ```
 4. Open the webpage. Usually it's `http://localhost:4173/`; however, follow your terminal instructions.
+See [GUI](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#gui)
 
 ## Functional Requirements Fulfilled
+#### Standard features
 - Realistic four-way intersection simulation with four approaches: **north, south, east, and west**
 - Realistic traffic light cycle simulation following a three-phase system: **green** - **yellow** - **red**, including protected left-turn signals
 - Vehicles can perform the following manoeuvres: **left turn, right turn, and going straight**
@@ -44,7 +44,7 @@ npm run demo
 - Traffic priority is based on how long a vehicle has been waiting at the intersection
 - Colliding-free signal phases are ensured - no colliding routes receive green lights at the same time
 
-## Additional Features
+#### Additional Features
 - Emergency vehicle preemption is implemented: emergency vehicles get immediate passage regardless of queue position
 - Fullstack web app with GUI and visualization of traffic light signals
 
@@ -54,7 +54,7 @@ npm run demo
 2. These paths are validated to ensure they point to `.json` files. If validation fails, an exception is thrown and the program terminates.
 3. The `input.json` file contains an array of commands. The program iterates over each command and executes the appropriate action described below.
 
-### addVehicle Command
+#### addVehicle Command
 This command creates a vehicle in the **virtual environment** and appends it to the queue corresponding to the specified origin direction (eg. north, south, etc.). In addition to the fields provided in the input, the algorithm dynamically assigns three new properties to the vehicle:
 
 | Fields             	| Type       	| Origin     	| Description                                                         	|
@@ -80,7 +80,7 @@ Sample input:
 },
 ```
 
-### step Command
+#### step Command
 Runs the simulation step for the **virtual environment**.
 
 1. The system begins by updating the current traffic light cycle. All `YELLOW` lights from the previous step are transitioned to `RED`.
@@ -138,7 +138,7 @@ The traffic is considered in four non-colliding route patterns:
 
 The priority is assigned to the vehicle in its turn, and the route matching the vehicle's desired manoeuvre is opened. Simultaneously, all non-colliding routes for that path are opened, and different vehicles awaiting their turn can proceed if their manoeuvre matches with the green light.
 
-### Example behaviour
+#### Example behaviour
 
 Input JSON:
 
@@ -266,3 +266,62 @@ To simulate the emergency vehicle, add a vehicle with ID that contains word `eme
 ![emergency](https://github.com/user-attachments/assets/0d021013-07cf-4be9-9e17-bea86f4f847f)
 
 As demonstrated in the example above, although the **vehicle** originating from the **north** has been waiting longer than the **emergency vehicle** coming from the **south**, priority is given to the **emergency vehicle** to ensure immediate passage regardless of the queue position. On the right, you can see the Emergency Vehicle passing before the cars that have higher priority (based on the waiting time). Similar to emergency colidor. This feature is done by moving the emergency vehicle to the top of the array during the arbitration process. 
+
+## GUI
+I've also prepared a complete GUI to visualize the traffic lights in each direction, as CLI might not be as readable.
+
+![image](https://github.com/user-attachments/assets/a77ae2af-4572-4d3d-a673-29169b0f1eb2)
+Here's a sample view of what it should look like when it works properly.
+
+How to use it correctly:
+![image](https://github.com/user-attachments/assets/2794a31c-3dcf-4626-a372-46b8de6b2b64)
+1. Select the `input.json` file
+2. Click **Upload** button to upload it to the server
+3. Click **Simulate** button to run the simulation
+4. Now you can track every step and what's happening under the hood.
+
+## REST API backend
+The simulation wouldn't be possible without the well-structured backend. The following endpoints handle all necessary operations to manage and simulate traffic flow effectively.
+
+#### Check communication
+```http
+GET /api/sim/
+```
+Verifies whether the server is reachable and communication is working as expected.
+
+#### Upload input.json data to server's temporary memory
+```http
+POST /api/sim/import
+```
+Clears the existing data in temporary memory and expects a valid JSON in the request body.  
+The uploaded steps are stored in memory and will be referenced by all further simulation endpoints.  
+*In a production environment, this data should be stored in a database and linked to the user's sessionID.*
+
+#### Simulate the traffic scenario
+```http
+POST /api/sim/simulate
+```
+Triggers the traffic simulation using the data stored in temporary memory.  
+Returns a JSON object containing the full simulation output. *However, there's also another endpoint to resolve the same data later. *
+
+#### Resolve telemetry data for each step
+```http
+GET /api/sim/stat/:id
+```
+Retrieves all step-specific telemetry data.  
+Used by the GUI as the user navigates between simulation steps (pressing “next step” or “previous step”).
+
+#### Return simulation output
+```http
+GET /api/sim/output
+```
+Provides the complete simulation output.  
+Useful if you want to retrieve the final results without triggering the simulation again.
+
+#### Return simulation input
+```http
+GET /api/sim/steps
+```
+Returns the original input steps uploaded via `/api/sim/import`, allowing inspection or debugging of the initial data.
+
+
