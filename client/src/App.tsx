@@ -6,7 +6,7 @@ import InputPanel from "./components/InputPanel";
 import PanelWrapper from "./components/PanelWrapper";
 import StepNavigator from "./components/StepNavigator";
 import { TelemetryDisplay } from "./components/TelemetryDisplay";
-import { getStep, importData, runSimulation } from "./services/simulation";
+import { getStep, importData, runSimulation } from "./services/requestHandler";
 import Command from "./types/interfaces/command.interface";
 import Output from "./types/interfaces/output.interface";
 import Telemetry from "./types/interfaces/telemetry.interface";

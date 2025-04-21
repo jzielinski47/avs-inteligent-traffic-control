@@ -9,14 +9,16 @@ const POSTRequest: RequestInit = {
     credentials: "include",
 };
 
+const serverURL: string = config.PORT ? `${config.SERVER}:${config.PORT}` : `${config.SERVER}`;
+
 export const importData = async (data: Command[]) => {
     try {
         const request: RequestInit = {
             ...POSTRequest,
             body: JSON.stringify(data),
         };
-        console.log("sending data to " + `${config.SERVER}:${config.PORT}/api/sim/import`);
-        const res = await fetch(`${config.SERVER}:${config.PORT}/api/sim/import`, request);
+        console.log("sending data to " + `${serverURL}/api/sim/import`);
+        const res = await fetch(`${serverURL}/api/sim/import`, request);
         if (res.ok) {
             console.log("ok");
             return res.json();
@@ -40,8 +42,8 @@ export const runSimulation = async () => {
         const request: RequestInit = {
             ...POSTRequest,
         };
-        console.log("sending data to " + `${config.SERVER}:${config.PORT}/api/sim/simulate`);
-        const res = await fetch(`${config.SERVER}:${config.PORT}/api/sim/simulate`, request);
+        console.log("sending data to " + `${serverURL}/api/sim/simulate`);
+        const res = await fetch(`${serverURL}/api/sim/simulate`, request);
         if (res.ok) {
             console.log("ok");
             return res.json();
@@ -65,8 +67,8 @@ export const getStep = async (i: number) => {
         const request: RequestInit = {
             method: "GET",
         };
-        console.log("sending data to " + `${config.SERVER}:${config.PORT}/api/sim/stat/${i}`);
-        const res = await fetch(`${config.SERVER}:${config.PORT}/api/sim/stat/${i}`, request);
+        console.log("sending data to " + `${serverURL}/api/sim/stat/${i}`);
+        const res = await fetch(`${serverURL}/api/sim/stat/${i}`, request);
         if (res.ok) {
             console.log("ok");
             return res.json();
