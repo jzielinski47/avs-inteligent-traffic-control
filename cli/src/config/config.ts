@@ -8,22 +8,22 @@ const defaultLightSignal: Lights = Lights.RED;
 
 export const environment: Environment = {
     [Directions.NORTH]: {
-        priorityLeftSignalLight: defaultLightSignal,
+        protectedLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },
     [Directions.EAST]: {
-        priorityLeftSignalLight: defaultLightSignal,
+        protectedLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },
     [Directions.SOUTH]: {
-        priorityLeftSignalLight: defaultLightSignal,
+        protectedLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },
     [Directions.WEST]: {
-        priorityLeftSignalLight: defaultLightSignal,
+        protectedLeftSignalLight: defaultLightSignal,
         straightRightSignalLight: defaultLightSignal,
         queue: [],
     },

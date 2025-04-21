@@ -20,6 +20,7 @@ function main(inputPath: string, outputPath: string) {
     const steps = input.commands;
 
     writeToFile(outputPath, processSteps(steps));
+    console.log(`See ${outputPath} for the results of simulation.`);
 }
 
 main(inputPath, outputPath);

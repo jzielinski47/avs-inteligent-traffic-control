@@ -33,11 +33,10 @@ const processSteps = (steps: Command[]): Output => {
 
                 break;
             case Commands.STEP:
-                // Updates lights: all YELLOW -> RED;
+               
                 updateTrafficLightsCycle();
 
                 const leftVehicles: string[] = [];
-
                 
                 runTrafficController();
 
@@ -47,7 +46,6 @@ const processSteps = (steps: Command[]): Output => {
                     east: environment.east.queue.length,
                     west: environment.west.queue.length,
                 });
-
                 
                 handleVehicleMovement(leftVehicles);
 
@@ -55,7 +53,6 @@ const processSteps = (steps: Command[]): Output => {
 
                 output.stepStatuses.push({ leftVehicles });
 
-                // Updates lights: all GREEN -> YELLOW;
                 updateTrafficLightsCycle();
                 break;
             default:

@@ -4,7 +4,7 @@ import { Lights } from "../types/enums/light.enum";
 const hardEnvironmentReset = () => {
     for (const dir of directionNames) {
         environment[dir].queue = [];
-        environment[dir].priorityLeftSignalLight = Lights.RED;
+        environment[dir].protectedLeftSignalLight = Lights.RED;
         environment[dir].straightRightSignalLight = Lights.RED;
     }
 

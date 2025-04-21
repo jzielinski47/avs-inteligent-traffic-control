@@ -8,7 +8,7 @@ export const handleVehicleMovement = (leftVehicles: string[]) => {
         const state = environment[dir];
         if (state.queue.length === 0) continue;
         const isGreenLight: boolean =
-            (state.queue[0].manoeuvre == Manoeuvres.LEFTTURN && state.priorityLeftSignalLight == Lights.GREEN) ||
+            (state.queue[0].manoeuvre == Manoeuvres.LEFTTURN && state.protectedLeftSignalLight == Lights.GREEN) ||
             (state.queue[0].manoeuvre == Manoeuvres.STRAIGHT && state.straightRightSignalLight == Lights.GREEN) ||
             (state.queue[0].manoeuvre == Manoeuvres.RIGHTTURN && state.straightRightSignalLight == Lights.GREEN);
 
