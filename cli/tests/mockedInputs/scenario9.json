@@ -1,0 +1,69 @@
+{
+    "commands": [
+        {
+            "type": "addVehicle",
+
+            "vehicleId": "vehicle1",
+
+            "startRoad": "west",
+
+            "endRoad": "north"
+        },
+
+        {
+            "type": "addVehicle",
+
+            "vehicleId": "vehicle2",
+
+            "startRoad": "north",
+
+            "endRoad": "south"
+        },
+
+        {
+            "type": "addVehicle",
+
+            "vehicleId": "vehicle3",
+
+            "startRoad": "south",
+
+            "endRoad": "north"
+        },
+
+        {
+            "type": "addVehicle",
+
+            "vehicleId": "emergency1",
+
+            "startRoad": "south",
+
+            "endRoad": "west"
+        },
+        {
+            "type": "addVehicle",
+
+            "vehicleId": "emergency2",
+
+            "startRoad": "south",
+
+            "endRoad": "west"
+        },
+
+        {
+            "type": "step"
+        },
+
+        {
+            "type": "step"
+        },
+        {
+            "type": "step"
+        },
+        {
+            "type": "step"
+        },
+        {
+            "type": "step"
+        }
+    ]
+}

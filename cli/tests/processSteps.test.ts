@@ -88,6 +88,19 @@ describe("processSteps", () => {
         expect(output).toMatchObject(expectedOut);
     });
 
+    test("should prioritize multiple emergency vehicles by forming a corridor with other cars moving simultaniously", () => {
+        const scenarioNumber: number = 9;
+        const sampleInput: string = `./tests/mockedInputs/scenario${scenarioNumber}.json`;
+        const sampleOutput: string = `./tests/mockedOutputs/scenario${scenarioNumber}.json`;
+
+        const input = JSON.parse(fs.readFileSync(sampleInput, "utf-8"));
+        const output: Output = processSteps(input.commands);
+
+        const expectedOut = JSON.parse(fs.readFileSync(sampleOutput, "utf-8"));
+        console.log(output, expectedOut);
+        expect(output).toMatchObject(expectedOut);
+    });
+
     test("should handle priority under heavy traffic of 28 vehicles at once", () => {
         const scenarioNumber: number = 7;
         const sampleInput: string = `./tests/mockedInputs/scenario${scenarioNumber}.json`;
