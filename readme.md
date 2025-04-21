@@ -14,6 +14,13 @@ npm run demo input.json output.json
 ```
 > Replace `input.json` and `output.json` with the actual file paths you want to use.
 
+#### Debug mode for CLI
+I've also prepared a debug mode with much more detailed logs. To run it execute the following command:
+```console
+npm run demo input.json output.json debug
+```
+> Replace `input.json` and `output.json` with the actual file paths you want to use.
+-------
 ### Fullstack web application setup
 I've also prepared a full-stack application consisting of a REST API server and the frontend GUI to better visualize and track the traffic control system.
 
