@@ -45,7 +45,7 @@ See [GUI](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/ma
 - Colliding-free signal phases are ensured - no colliding routes receive green lights at the same time
 
 #### Additional Features
-- Emergency vehicle preemption is implemented: emergency vehicles get immediate passage regardless of queue position
+- Emergency vehicles get immediate passage regardless of queue position
 - Fullstack web app with GUI and visualization of traffic light signals
 
 ## Simulation Algorithm
