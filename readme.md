@@ -46,6 +46,7 @@ npm run demo
 
 ## Additional Features
 - Emergency vehicle preemption is implemented: emergency vehicles get immediate passage regardless of queue position
+- Fullstack web app with GUI and visualization of traffic light signals
 
 ## Simulation Algorithm
 
