@@ -36,7 +36,7 @@ simulation.post("/simulate", (req: Request, res: Response) => {
         const result = runSimulation(importedSteps);
         res.status(200).json(result);
         return;
-    } catch (err) {
+    } catch (err: unknown) {
         console.error("Simulation error:", err);
         res.status(500).json({ msg: "Internal server error during simulation." });
         return;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
-import HUIButton from "./components/HUIButton";
+import HButton from "./components/HUIButton";
 import InputPanel from "./components/InputPanel";
 import PanelWrapper from "./components/PanelWrapper";
 import StepNavigator from "./components/StepNavigator";
@@ -95,12 +95,9 @@ const App = () => {
                 />
                 <PanelWrapper>
                     <div className="flex flex-col gap-4 w-full h-full justify-center items-center">
-                        <HUIButton
-                            action={handleSimulationButton}
-                            className={canSimulate ? "bg-green/35" : "bg-primary"}
-                        >
+                        <HButton action={handleSimulationButton} className={canSimulate ? "bg-green/35" : "bg-primary"}>
                             Simulate
-                        </HUIButton>
+                        </HButton>
                         {isUploaded && canSimulate && !isSimulated ? (
                             <LogMessage>
                                 Click <b>Simulate</b> button to run the simulation

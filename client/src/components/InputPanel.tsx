@@ -1,18 +1,8 @@
 import { Textarea } from "@headlessui/react";
+import InputPanelProps from "../types/interfaces/inputPanelProps.interface";
 import InputFile from "./InputFile";
-import PanelWrapper from "./PanelWrapper";
-import Command from "../types/interfaces/command.interface";
 import LogMessage from "./LogMessage";
-
-interface IInputPanel {
-    inputData: Command[];
-    readInputFile: (e: React.FormEvent<HTMLInputElement>) => void;
-    handleDataImport: () => void;
-    logMessage: string;
-    canSimulate?: boolean;
-    isUploaded?: boolean;
-    isSimulated?: boolean;
-}
+import PanelWrapper from "./PanelWrapper";
 
 const InputPanel = ({
     inputData,
@@ -22,7 +12,7 @@ const InputPanel = ({
     canSimulate,
     isUploaded,
     isSimulated,
-}: IInputPanel) => {
+}: InputPanelProps) => {
     return (
         <PanelWrapper>
             <InputFile

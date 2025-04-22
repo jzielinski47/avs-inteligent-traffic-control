@@ -1,6 +1,7 @@
 interface Config {
-    port: number;
-    nodeEnv: string;
+    PORT: number;
+    SERVER: string;
+    nodeEnv?: string;
 }
 
 export default Config;

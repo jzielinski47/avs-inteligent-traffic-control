@@ -9,8 +9,8 @@ const outputPath = process.argv[3];
 
 try {
     validateJson(inputPath, outputPath);
-} catch (e) {
-    e instanceof Error ? console.error("Error", e.message) : null;
+} catch (e: unknown) {
+    e instanceof Error ? console.error("Error", e.message) : console.error("Unknown error occurred:", e);
     process.exit(1);
 }
 

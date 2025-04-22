@@ -1,4 +1,4 @@
-import { directionNames, environment, telemetry } from "../../models/model";
+import { directionNames, environment } from "../../models/model";
 import { Lights } from "../../types/enums/light.enum";
 import { Manoeuvres } from "../../types/enums/manoeuvres.enum";
 

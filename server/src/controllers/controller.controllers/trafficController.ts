@@ -1,5 +1,4 @@
 import { routeGroupDTO } from "../../types/interfaces/routeGroupDTO.interface";
-import { Vehicle } from "../../types/interfaces/vehicle.interface";
 import { getPriorityVehicle } from "../controller.utils/assignPriority";
 import { assignMatchingRouteGroup, setGreenLightsForPattern } from "./trafficLogic";
 

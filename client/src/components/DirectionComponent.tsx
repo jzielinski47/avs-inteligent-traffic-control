@@ -1,14 +1,9 @@
 import LeftArrow from "../assets/LeftArrow";
 import StraightRightArrow from "../assets/StraightRightArrow";
-import { iRoad } from "../types/interfaces/environment.interface";
+import DirectionComponentProps from "../types/interfaces/directionComponentProps.interface";
 import decodeColor from "../utils/decodeColor";
 
-interface iDirectionComponent {
-    name: string;
-    direction: iRoad;
-}
-
-const DirectionComponent = ({ name, direction }: iDirectionComponent) => {
+const DirectionComponent = ({ name, direction }: DirectionComponentProps) => {
     return (
         <div>
             <h3>{name}</h3>

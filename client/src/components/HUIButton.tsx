@@ -1,13 +1,7 @@
 import { Button } from "@headlessui/react";
+import ButtonProps from "../types/interfaces/buttonProps.interface";
 
-interface iButton {
-    children?: React.ReactNode;
-    disabled?: boolean;
-    action?: () => void;
-    className?: string;
-}
-
-const HUIButton = ({ children, disabled = false, action, className = "bg-primary" }: iButton) => {
+const HButton = ({ children, disabled = false, action, className = "bg-primary" }: ButtonProps) => {
     return (
         <Button
             className={
@@ -22,4 +16,4 @@ const HUIButton = ({ children, disabled = false, action, className = "bg-primary
     );
 };
 
-export default HUIButton;
+export default HButton;

@@ -1,9 +1,7 @@
-import.meta.env.VITE_SOME_KEY;
+import Config from "../types/interfaces/config.interface";
 
-interface Config {
-    PORT: number;
-    SERVER: string;
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+import.meta.env.VITE_SOME_KEY;
 
 const config: Config = {
     PORT: import.meta.env.VITE_PORT || 8000,

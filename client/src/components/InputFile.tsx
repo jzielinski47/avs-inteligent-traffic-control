@@ -1,5 +1,5 @@
 import { Field, Label, Description, Input } from "@headlessui/react";
-import HUIButton from "./HUIButton";
+import HButton from "./HUIButton";
 
 interface iInputFile {
     label: string;
@@ -22,9 +22,9 @@ const InputFile = ({ label, description, action, action2, canSim }: iInputFile) 
                     onChange={action}
                     accept="application/json"
                 />
-                <HUIButton action={action2} className={canSim ? "bg-green/35" : "bg-primary"}>
+                <HButton action={action2} className={canSim ? "bg-green/35" : "bg-primary"}>
                     Upload
-                </HUIButton>
+                </HButton>
             </div>
         </Field>
     );
