@@ -54,6 +54,7 @@ See [GUI](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/ma
 #### Additional Features
 - Emergency vehicles get immediate passage regardless of queue position
 - Fullstack web app with GUI and visualization of traffic light signals
+- CLI Unit tests written in Jest, verifying different traffic scenarios, including heavy traffic and emergency vehicles
 
 ## Simulation Algorithm
 
@@ -300,6 +301,19 @@ To simulate the emergency vehicle, add a vehicle with ID that contains word `eme
 ![emergency](https://github.com/user-attachments/assets/0d021013-07cf-4be9-9e17-bea86f4f847f)
 
 As demonstrated in the example above, although the **vehicle** originating from the **north** has been waiting longer than the **emergency vehicle** coming from the **south**, priority is given to the **emergency vehicle** to ensure immediate passage regardless of the queue position. On the right, you can see the Emergency Vehicle passing before the cars that have higher priority (based on the waiting time). Similar to emergency colidor. This feature is done by moving the emergency vehicle to the top of the array during the arbitration process. 
+
+## Algorithm Unit tests
+The **CLI app** (core algorithm) is covered with a set of tests written in Jest. Most of them focus on various realistic and edge-case traffic scenarios.
+Each test loads a dedicated scenario input.json (eg. `scenario1.json` located at `/tests/mockedInput/` and compares the output of the algorithm with the expected scenario output.json at `/tests/mockedOutput`.
+
+The tested cases include:
+- Standard traffic flow
+- Multiple vehicles from the same direction
+- Vehicles from all directions simultaneously
+- Emergency vehicle preemption (single and multiple)
+- Emergency vehicles not at front of the queue
+- Heavy traffic with 28+ vehicles
+- Mixed scenarios with simultaneous movement and emergency corridors
 
 ## GUI
 I've also prepared a complete GUI to visualize the traffic lights in each direction, as CLI might not be as readable.
