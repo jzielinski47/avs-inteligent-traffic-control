@@ -39,7 +39,7 @@ cd client
 npm run demo
 ```
 4. Open the webpage. Usually it's `http://localhost:4173/`; however, follow your terminal instructions.
-See [GUI](https://github.com/jzielinski47/avs-inteligent-traffic-control/edit/main/readme.md#gui)
+See [GUI](#gui)
 
 ## Functional Requirements Fulfilled
 #### Standard features
