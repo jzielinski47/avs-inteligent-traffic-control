@@ -1,5 +1,5 @@
 import { directionNames, environment, isDebug, output } from "../config/config";
-import { trafficController as runTrafficController } from "../controllers/trafficController";
+import { resolveTrafficPattern } from "../controllers/trafficController";
 import { updateTrafficLightsCycle } from "../controllers/trafficLogic";
 import { Commands } from "../types/enums/command.enum";
 import { Command } from "../types/interfaces/command.interface";
@@ -36,7 +36,7 @@ const processSteps = (steps: Command[]): Output => {
 
                 const leftVehicles: string[] = [];
 
-                runTrafficController();
+                resolveTrafficPattern();
 
                 console.log(`Step ${index}: queue lengths`, {
                     north: environment.north.queue.length,
