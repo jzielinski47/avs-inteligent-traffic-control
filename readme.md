@@ -208,7 +208,7 @@ Example stage before arbitration:
 }
 ```
 
-At this stage, the Traffic Control System assigned priority to `vehicle1` which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See [Scenario 1](https://github.com/jzielinski47/avs-inteligent-traffic-control?tab=readme-ov-file#traffic-control-algorithm).
+At this stage, the Traffic Control System assigned priority to `vehicle1` which has waited 2 rounds at the time of arbitration. The left protected arrow has been set to green light on both sides. See [Scenario 1](#traffic-control-algorithm).
 
 Example stage after arbitration:
 ```json
@@ -302,7 +302,7 @@ To simulate the emergency vehicle, add a vehicle with ID that contains word `eme
 
 As demonstrated in the example above, although the **vehicle** originating from the **north** has been waiting longer than the **emergency vehicle** coming from the **south**, priority is given to the **emergency vehicle** to ensure immediate passage regardless of the queue position. On the right, you can see the Emergency Vehicle passing before the cars that have higher priority (based on the waiting time). Similar to emergency colidor. This feature is done by moving the emergency vehicle to the top of the array during the arbitration process. 
 
-## Algorithm Unit tests
+## Unit and integration tests
 The **CLI app** (core algorithm) is covered with a set of tests written in Jest. Most of them focus on various realistic and edge-case traffic scenarios.
 Each test loads a dedicated scenario input.json (eg. `scenario1.json` located at `/tests/mockedInput/` and compares the output of the algorithm with the expected scenario output.json at `/tests/mockedOutput`.
 
