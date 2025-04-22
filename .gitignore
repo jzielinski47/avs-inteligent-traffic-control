@@ -149,3 +149,5 @@ dist/
 output.json
 out.json
 out*.json
+
+*.bundle
