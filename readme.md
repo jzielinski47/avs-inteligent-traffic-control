@@ -1,4 +1,4 @@
-# AVSystem intelligent traffic control system
+# intelligent traffic control system
 
 ## Setup
 
